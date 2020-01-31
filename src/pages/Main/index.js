@@ -32,6 +32,7 @@ export default class Main extends Component {
     super();
     this.state = {
       loading: false,
+      emptySearch: false,
       newPokemon: '',
       pokemon: {},
       sprites: [],
@@ -40,18 +41,39 @@ export default class Main extends Component {
     };
   }
 
+  static getDerivedStateFromError(error) {
+    // Atualiza o state para que a próxima renderização mostre a UI alternativa.
+    return { hasError: true };
+  }
+
   handleInputChange = e => {
     this.setState({ newPokemon: e.target.value });
   };
 
   handleSubmit = async e => {
-    const { newPokemon } = this.state;
     e.preventDefault();
+    const { newPokemon } = this.state;
+    if (!newPokemon) return null;
     this.setState({ loading: true });
-    const response = await Api.get(`/${newPokemon.toLowerCase()}`);
+    const response = await Api.get(`/${newPokemon.toLowerCase()}`).catch(
+      error => {
+        if (error.response.status === 404) {
+          this.setState({ emptySearch: true });
+          console.log('ta vazio bro');
+        }
+      }
+    );
+    const { emptySearch } = this.state;
+    if (emptySearch) {
+      console.log('Vazio');
+      return this.setState({
+        newPokemon: '',
+        loading: false,
+        emptySearch: false,
+      });
+    }
     const pokemonData = response.data;
     const pokemonSprites = response.data.sprites;
-
     this.setState({
       newPokemon: '',
       pokemon: pokemonData,
