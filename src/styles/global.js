@@ -10,6 +10,8 @@ export default createGlobalStyle`
 
   html, body, #root {
     min-height: 100%;
+    background: #1e1e1e;
+    font-family: "Trebuchet MS", Helvetica, Arial, sans-serif;
   }
 
   body {
