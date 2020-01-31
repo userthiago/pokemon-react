@@ -1,12 +1,16 @@
-import styled from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 
 import bg from '../../assets/bg.gif';
 import pokeball from '../../assets/pokeball.svg';
+import ballSprite from '../../assets/pokeballSprite.png';
 
 export const Container = styled.div``;
 
 export const Header = styled.header`
-  flex: 1;
+  position: fixed;
+  width: 100%;
+  height: 60px;
+  top: 0;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -26,9 +30,20 @@ export const Form = styled.form`
   }
 `;
 
-export const SubmitButton = styled.button.attrs({
+const rotate = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(-360deg);
+  }
+`;
+
+export const SubmitButton = styled.button.attrs(props => ({
   type: 'submit',
-})`
+  disabled: props.loading,
+}))`
   height: 35px;
   width: 35px;
   border: 0;
@@ -40,6 +55,19 @@ export const SubmitButton = styled.button.attrs({
   svg {
     color: white;
   }
+
+  &[disabled] {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  ${props =>
+    props.loading &&
+    css`
+      svg {
+        animation: ${rotate} 2s linear infinite;
+      }
+    `}
 `;
 
 export const Banner = styled.div`
@@ -49,6 +77,7 @@ export const Banner = styled.div`
   padding: 0 120px;
   display: flex;
   align-items: center;
+  margin-top: 60px;
 
   @keyframes animatedBackground {
     from {
@@ -86,8 +115,10 @@ export const Pokemon = styled.div`
 
 export const Content = styled.div`
   overflow: auto;
+  display: flex;
+  justify-content: center;
   border-radius: 0 0 6px 6px;
-  padding: 20px;
+  padding: 40px 20px;
 `;
 
 export const Title = styled.div`
@@ -128,10 +159,75 @@ export const PokePhoto = styled.img.attrs(props => ({ src: props.src }))`
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  padding: 20px;
+  padding: 5px;
   border-radius: 50%;
 `;
 
-export const Name = styled.div`
-  margin-left: 10px;
+export const Sprites = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const PokeSprite = styled.img.attrs(props => ({ src: props.src }))`
+  width: 100px;
+  height: 100px;
+  background-image: url(${ballSprite});
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 80px;
+  border: 0;
+`;
+
+export const Info = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 450px;
+  margin-left: 24px;
+
+  div {
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    background: #ddd;
+    border-radius: 4px;
+    margin-bottom: 4px;
+  }
+`;
+
+export const Name = styled.label`
+  margin-bottom: 0px !important;
+  margin-left: 4px;
+  p::first-letter {
+    text-transform: uppercase;
+  }
+`;
+
+export const ButtonMoreDetails = styled.button`
+  border: 0;
+  background: #8b0002;
+  padding: 5px 20px;
+  width: 450px;
+  height: 30px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #fff;
+`;
+
+export const Test = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  p {
+    position: absolute;
+    bottom: 0;
+    font-size: 12px;
+    background-color: #8b0002;
+    color: #fff;
+    border-radius: 12px;
+    padding: 2px 8px;
+  }
 `;

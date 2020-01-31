@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { MdSearch } from 'react-icons/md';
+import { MdSearch, MdReplay } from 'react-icons/md';
 import blue from '../../assets/ball.png';
 import green from '../../assets/green-ball.png';
 import red from '../../assets/red-ball.png';
@@ -18,16 +18,23 @@ import {
   Balls,
   Ball,
   PokePhoto,
+  PokeSprite,
   Name,
   Content,
+  Sprites,
+  Info,
+  ButtonMoreDetails,
+  Test,
 } from './styles';
 
 export default class Main extends Component {
   constructor() {
     super();
     this.state = {
+      loading: false,
       newPokemon: '',
       pokemon: {},
+      sprites: [],
       image:
         'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other-sprites/official-artwork/',
     };
@@ -40,18 +47,21 @@ export default class Main extends Component {
   handleSubmit = async e => {
     const { newPokemon } = this.state;
     e.preventDefault();
-
+    this.setState({ loading: true });
     const response = await Api.get(`/${newPokemon.toLowerCase()}`);
     const pokemonData = response.data;
+    const pokemonSprites = response.data.sprites;
 
     this.setState({
       newPokemon: '',
       pokemon: pokemonData,
+      sprites: pokemonSprites,
+      loading: false,
     });
   };
 
   render() {
-    const { newPokemon, pokemon, image } = this.state;
+    const { loading, newPokemon, pokemon, sprites, image } = this.state;
     const uriImage = `${image + pokemon.id}.png`;
     return (
       <Container>
@@ -63,14 +73,16 @@ export default class Main extends Component {
               value={newPokemon}
               onChange={this.handleInputChange}
             />
-            <SubmitButton>
-              <MdSearch size="16" />
+            <SubmitButton loading={loading}>
+              {loading ? <MdReplay size="16" /> : <MdSearch size="16" />}
             </SubmitButton>
           </Form>
         </Header>
+
         <Banner>
           <h1>Pokédex React</h1>
         </Banner>
+
         <Pokemon>
           <Title>
             <Balls>
@@ -79,16 +91,38 @@ export default class Main extends Component {
               <Ball src={yellow} />
               <Ball src={green} />
             </Balls>
-            {pokemon.id == null ? (
-              ''
-            ) : (
-              <Name>
-                {pokemon.name} Nº {pokemon.id}
-              </Name>
-            )}
           </Title>
           <Content>
             {pokemon.id == null ? 'teste' : <PokePhoto src={uriImage} />}
+            <Sprites>
+              <Test>
+                <p>Normal</p>
+                <PokeSprite src={sprites.front_default} />
+              </Test>
+              <Test>
+                <p>Shiny</p>
+                <PokeSprite src={sprites.front_shiny} />
+              </Test>
+            </Sprites>
+
+            <Info>
+              <div>
+                <strong>Posição na Pokédex:</strong> <Name>{pokemon.id}</Name>
+              </div>
+              <div>
+                <strong>Nome:</strong>{' '}
+                <Name>
+                  <p>{pokemon.name}</p>
+                </Name>
+              </div>
+              <div>
+                <strong>Peso:</strong> <Name>{pokemon.weight}</Name>
+              </div>
+              <div>
+                <strong>Altura:</strong> <Name>{pokemon.height}</Name>
+              </div>
+              <ButtonMoreDetails>Mais Detalhes</ButtonMoreDetails>
+            </Info>
           </Content>
         </Pokemon>
       </Container>
