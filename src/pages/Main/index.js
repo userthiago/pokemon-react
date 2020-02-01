@@ -4,12 +4,15 @@ import blue from '../../assets/ball.png';
 import green from '../../assets/green-ball.png';
 import red from '../../assets/red-ball.png';
 import yellow from '../../assets/yellow-ball.png';
+import logo from '../../assets/logo.png';
 
 import Api from '../../services/api';
 
 import {
+  PokemonMinInfo,
   Container,
   Header,
+  Logo,
   Form,
   SubmitButton,
   Banner,
@@ -17,6 +20,7 @@ import {
   Title,
   Balls,
   Ball,
+  PokemonList,
   PokePhoto,
   PokeSprite,
   Name,
@@ -34,6 +38,9 @@ export default class Main extends Component {
       loading: false,
       emptySearch: false,
       newPokemon: '',
+      pokemonPageCount: 0,
+      pokemonPageMax: 20,
+      pokemonsList: [],
       pokemon: {},
       sprites: [],
       image:
@@ -41,28 +48,55 @@ export default class Main extends Component {
     };
   }
 
-  static getDerivedStateFromError(error) {
-    // Atualiza o state para que a próxima renderização mostre a UI alternativa.
-    return { hasError: true };
+  componentDidMount() {
+    this.handleLoad();
   }
 
   handleInputChange = e => {
     this.setState({ newPokemon: e.target.value });
   };
 
+  testame = () => {
+    const { pokemonPageCount } = this.state;
+    this.setState({ pokemonPageCount: pokemonPageCount + 20 }, () => {
+      this.handleLoad();
+    });
+  };
+
+  handleLoad = async () => {
+    const { pokemonsList, pokemonPageCount, pokemonPageMax } = this.state;
+
+    this.setState({ loading: true });
+
+    const response = await Api.get(
+      `?offset=${pokemonPageCount}&limit=${pokemonPageMax}`
+    ).catch(error => {
+      if (error.response.status === 404) {
+        this.setState({ emptySearch: true });
+      }
+    });
+
+    this.setState({
+      pokemonsList: [...pokemonsList, ...response.data.results],
+    });
+    this.setState({ loading: false });
+  };
+
   handleSubmit = async e => {
     e.preventDefault();
+
     const { newPokemon } = this.state;
     if (!newPokemon) return null;
+
     this.setState({ loading: true });
     const response = await Api.get(`/${newPokemon.toLowerCase()}`).catch(
       error => {
         if (error.response.status === 404) {
           this.setState({ emptySearch: true });
-          console.log('ta vazio bro');
         }
       }
     );
+
     const { emptySearch } = this.state;
     if (emptySearch) {
       console.log('Vazio');
@@ -82,8 +116,19 @@ export default class Main extends Component {
     });
   };
 
+  changeLink = (image, link) => {
+    return `${image + link.slice(34, -1)}.png`;
+  };
+
   render() {
-    const { loading, newPokemon, pokemon, sprites, image } = this.state;
+    const {
+      loading,
+      newPokemon,
+      pokemon,
+      sprites,
+      image,
+      pokemonsList,
+    } = this.state;
     const uriImage = `${image + pokemon.id}.png`;
     return (
       <Container>
@@ -102,6 +147,7 @@ export default class Main extends Component {
         </Header>
 
         <Banner>
+          <Logo src={logo} />
           <h1>Pokédex React</h1>
         </Banner>
 
@@ -115,36 +161,61 @@ export default class Main extends Component {
             </Balls>
           </Title>
           <Content>
-            {pokemon.id == null ? 'teste' : <PokePhoto src={uriImage} />}
-            <Sprites>
-              <Test>
-                <p>Normal</p>
-                <PokeSprite src={sprites.front_default} />
-              </Test>
-              <Test>
-                <p>Shiny</p>
-                <PokeSprite src={sprites.front_shiny} />
-              </Test>
-            </Sprites>
+            {!pokemon.id ? (
+              <>
+                <PokemonList>
+                  {pokemonsList.map(poke => (
+                    <li key={String(poke.name)}>
+                      <div>#{poke.url.slice(34, -1)}</div>
+                      <img
+                        src={this.changeLink(image, poke.url)}
+                        alt={poke.name}
+                      />
+                      <p>
+                        <a href="/">{poke.name}</a>
+                      </p>
+                    </li>
+                  ))}
+                </PokemonList>
+                <button type="button" onClick={() => this.testame()}>
+                  Clica em mim
+                </button>
+              </>
+            ) : (
+              <PokemonMinInfo>
+                <PokePhoto src={uriImage} />
+                <Sprites>
+                  <Test>
+                    <p>Normal</p>
+                    <PokeSprite src={sprites.front_default} />
+                  </Test>
+                  <Test>
+                    <p>Shiny</p>
+                    <PokeSprite src={sprites.front_shiny} />
+                  </Test>
+                </Sprites>
 
-            <Info>
-              <div>
-                <strong>Posição na Pokédex:</strong> <Name>{pokemon.id}</Name>
-              </div>
-              <div>
-                <strong>Nome:</strong>{' '}
-                <Name>
-                  <p>{pokemon.name}</p>
-                </Name>
-              </div>
-              <div>
-                <strong>Peso:</strong> <Name>{pokemon.weight}</Name>
-              </div>
-              <div>
-                <strong>Altura:</strong> <Name>{pokemon.height}</Name>
-              </div>
-              <ButtonMoreDetails>Mais Detalhes</ButtonMoreDetails>
-            </Info>
+                <Info>
+                  <div>
+                    <strong>Posição na Pokédex:</strong>{' '}
+                    <Name>{pokemon.id}</Name>
+                  </div>
+                  <div>
+                    <strong>Nome:</strong>{' '}
+                    <Name>
+                      <p>{pokemon.name}</p>
+                    </Name>
+                  </div>
+                  <div>
+                    <strong>Peso:</strong> <Name>{pokemon.weight}</Name>
+                  </div>
+                  <div>
+                    <strong>Altura:</strong> <Name>{pokemon.height}</Name>
+                  </div>
+                  <ButtonMoreDetails>Mais Detalhes</ButtonMoreDetails>
+                </Info>
+              </PokemonMinInfo>
+            )}
           </Content>
         </Pokemon>
       </Container>

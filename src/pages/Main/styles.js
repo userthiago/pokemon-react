@@ -68,6 +68,19 @@ export const SubmitButton = styled.button.attrs(props => ({
         animation: ${rotate} 2s linear infinite;
       }
     `}
+
+  &:hover {
+    background: #a22729;
+  }
+`;
+
+const bannerMove = keyframes`
+  from {
+    background-position: 0 100%;
+  }
+  to {
+    background-position: 100% 0;
+  }
 `;
 
 export const Banner = styled.div`
@@ -77,32 +90,21 @@ export const Banner = styled.div`
   padding: 0 120px;
   display: flex;
   align-items: center;
+  justify-content: center;
   margin-top: 60px;
 
-  @keyframes animatedBackground {
-    from {
-      background-position: 0 100%;
-    }
-    to {
-      background-position: 100% 0;
-    }
-  }
-
-  @-webkit-keyframes animatedBackground {
-    from {
-      background-position: 0 100%;
-    }
-    to {
-      background-position: 100% 0;
-    }
-  }
-
-  animation: animatedBackground 40s linear infinite;
+  animation: ${bannerMove} 40s linear infinite;
+  animation-fill-mode: both;
 
   h1 {
     color: #fff;
     font-size: 50px;
   }
+`;
+
+export const Logo = styled.img`
+  width: 120px;
+  margin-right: 16px;
 `;
 
 export const Pokemon = styled.div`
@@ -114,11 +116,70 @@ export const Pokemon = styled.div`
 `;
 
 export const Content = styled.div`
-  overflow: auto;
+  flex: 1;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   border-radius: 0 0 6px 6px;
   padding: 40px 20px;
+`;
+
+export const PokemonList = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  list-style: none;
+
+  li {
+    border: 2px solid #444;
+    border-radius: 8px;
+    background: #999;
+    margin: 10px 10px;
+  }
+
+  img {
+    width: 150px;
+    background-image: url(${ballSprite});
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 80%;
+  }
+
+  div {
+    background: #444;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 4px 0 4px 0;
+    padding: 4px;
+    width: 60px;
+    text-align: center;
+  }
+
+  p {
+    text-align: center;
+    font-weight: bold;
+    color: #fff;
+    background: #444;
+    border-radius: 0 0 4px 4px;
+    padding: 4px 0;
+    &::first-letter {
+      text-transform: uppercase;
+    }
+
+    a {
+      text-decoration: none;
+      color: #fff;
+
+      &:hover {
+        color: #cc1416;
+      }
+    }
+  }
+`;
+
+export const PokemonMinInfo = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
 export const Title = styled.div`
