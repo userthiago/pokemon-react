@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { MdSearch, MdReplay } from 'react-icons/md';
+import { Link } from 'react-router-dom';
+import { MdSearch, MdReplay, MdAdd } from 'react-icons/md';
 import blue from '../../assets/ball.png';
 import green from '../../assets/green-ball.png';
 import red from '../../assets/red-ball.png';
@@ -21,6 +22,7 @@ import {
   Balls,
   Ball,
   PokemonList,
+  AddMoreButton,
   PokePhoto,
   PokeSprite,
   Name,
@@ -28,7 +30,8 @@ import {
   Sprites,
   Info,
   ButtonMoreDetails,
-  Test,
+  Tag,
+  TextTest,
 } from './styles';
 
 export default class Main extends Component {
@@ -128,6 +131,7 @@ export default class Main extends Component {
       sprites,
       image,
       pokemonsList,
+      pokemonPageMax,
     } = this.state;
     const uriImage = `${image + pokemon.id}.png`;
     return (
@@ -177,44 +181,59 @@ export default class Main extends Component {
                     </li>
                   ))}
                 </PokemonList>
-                <button type="button" onClick={() => this.testame()}>
-                  Clica em mim
-                </button>
+                <TextTest>
+                  <AddMoreButton type="button" onClick={() => this.testame()}>
+                    <MdAdd size="40" />
+                  </AddMoreButton>
+                  <span className="tooltiptext">
+                    Clique para buscar mais {pokemonPageMax} Pokémons
+                  </span>
+                </TextTest>
               </>
             ) : (
-              <PokemonMinInfo>
-                <PokePhoto src={uriImage} />
-                <Sprites>
-                  <Test>
-                    <p>Normal</p>
-                    <PokeSprite src={sprites.front_default} />
-                  </Test>
-                  <Test>
-                    <p>Shiny</p>
-                    <PokeSprite src={sprites.front_shiny} />
-                  </Test>
-                </Sprites>
+              <>
+                <Link
+                  onClick={() => {
+                    this.setState({ pokemon: {} });
+                  }}
+                  to="/"
+                >
+                  Voltar para a lista
+                </Link>
+                <PokemonMinInfo>
+                  <PokePhoto src={uriImage} />
+                  <Sprites>
+                    <Tag>
+                      <p>Normal</p>
+                      <PokeSprite src={sprites.front_default} />
+                    </Tag>
+                    <Tag>
+                      <p>Shiny</p>
+                      <PokeSprite src={sprites.front_shiny} />
+                    </Tag>
+                  </Sprites>
 
-                <Info>
-                  <div>
-                    <strong>Posição na Pokédex:</strong>{' '}
-                    <Name>{pokemon.id}</Name>
-                  </div>
-                  <div>
-                    <strong>Nome:</strong>{' '}
-                    <Name>
-                      <p>{pokemon.name}</p>
-                    </Name>
-                  </div>
-                  <div>
-                    <strong>Peso:</strong> <Name>{pokemon.weight}</Name>
-                  </div>
-                  <div>
-                    <strong>Altura:</strong> <Name>{pokemon.height}</Name>
-                  </div>
-                  <ButtonMoreDetails>Mais Detalhes</ButtonMoreDetails>
-                </Info>
-              </PokemonMinInfo>
+                  <Info>
+                    <div>
+                      <strong>Posição na Pokédex:</strong>{' '}
+                      <Name>{pokemon.id}</Name>
+                    </div>
+                    <div>
+                      <strong>Nome:</strong>{' '}
+                      <Name>
+                        <p>{pokemon.name}</p>
+                      </Name>
+                    </div>
+                    <div>
+                      <strong>Peso:</strong> <Name>{pokemon.weight}</Name>
+                    </div>
+                    <div>
+                      <strong>Altura:</strong> <Name>{pokemon.height}</Name>
+                    </div>
+                    <ButtonMoreDetails>Mais Detalhes</ButtonMoreDetails>
+                  </Info>
+                </PokemonMinInfo>
+              </>
             )}
           </Content>
         </Pokemon>
