@@ -111,7 +111,7 @@ export default class Main extends Component {
     }
     const pokemonData = response.data;
     const pokemonSprites = response.data.sprites;
-    this.setState({
+    return this.setState({
       newPokemon: '',
       pokemon: pokemonData,
       sprites: pokemonSprites,
@@ -144,7 +144,7 @@ export default class Main extends Component {
               value={newPokemon}
               onChange={this.handleInputChange}
             />
-            <SubmitButton loading={loading}>
+            <SubmitButton loading={loading ? 1 : 0}>
               {loading ? <MdReplay size="16" /> : <MdSearch size="16" />}
             </SubmitButton>
           </Form>

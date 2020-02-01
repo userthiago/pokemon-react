@@ -226,7 +226,7 @@ export const Ball = styled.img.attrs(props => ({ src: props.src }))`
   & + img {
     height: 10px;
     width: 10px;
-    margin-left: 5px;
+    margin-left: 8px;
   }
 `;
 
