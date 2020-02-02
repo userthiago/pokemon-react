@@ -51,7 +51,7 @@ export default class Main extends Component {
     this.setState({ newPokemon: e.target.value });
   };
 
-  loadMore = () => {
+  handleLoadMore = () => {
     const { pokemonPageCount } = this.state;
     this.setState({ pokemonPageCount: pokemonPageCount + 20 }, () => {
       this.handleLoad();
@@ -164,7 +164,10 @@ export default class Main extends Component {
                 ))}
               </PokemonList>
               <TextTest>
-                <AddMoreButton type="button" onClick={() => this.loadMore()}>
+                <AddMoreButton
+                  type="button"
+                  onClick={() => this.handleLoadMore()}
+                >
                   <MdAdd size="40" />
                 </AddMoreButton>
                 <span className="tooltiptext">

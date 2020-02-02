@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { PokedexHeader, Title, Content, Balls, Ball } from './styles';
 
 import blue from '../../assets/ball.png';
@@ -21,6 +22,10 @@ const PokedexContainer = props => {
       <Content>{children}</Content>
     </PokedexHeader>
   );
+};
+
+PokedexContainer.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export default PokedexContainer;
