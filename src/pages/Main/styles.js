@@ -32,13 +32,17 @@ export const SubmitButton = styled.button.attrs(props => ({
   height: 35px;
   width: 35px;
   border: 0;
-  background: #8b0002;
+  background: #7a0002;
   border-radius: 0 4px 4px 0;
   display: flex;
   align-items: center;
   justify-content: center;
   svg {
     color: white;
+  }
+
+  &:hover {
+    background: #8b0002;
   }
 
   &[disabled] {
@@ -53,10 +57,6 @@ export const SubmitButton = styled.button.attrs(props => ({
         animation: ${rotate} 2s linear infinite;
       }
     `}
-
-  &:hover {
-    background: #a22729;
-  }
 `;
 
 export const PokemonList = styled.ul`
@@ -131,8 +131,8 @@ export const AddMoreButton = styled.button`
 export const PokemonMinInfo = styled.div`
   display: flex;
   justify-content: center;
-  border: 1px solid #444;
-  background: #999;
+  border: 1px solid #bbb;
+  background: #eee;
   padding: 16px;
   border-radius: 8px;
   position: relative;
@@ -140,11 +140,11 @@ export const PokemonMinInfo = styled.div`
 
 export const PokeID = styled.div`
   position: absolute;
-  top: 0;
-  left: 0;
+  top: -10px;
+  left: -10px;
   padding: 4px;
-  background: #444;
-  border-radius: 6px 0 4px 0;
+  background: #bbb;
+  border-radius: 4px;
   width: 70px;
   text-align: center;
   color: #fff;

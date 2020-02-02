@@ -114,11 +114,6 @@ export default class Main extends Component {
     const pokemonData = response.data;
     const pokemonSprites = response.data.sprites;
 
-    // toast.success(
-    //   `${pokemonData.name[0].toUpperCase() +
-    //     pokemonData.name.slice(1)} encontrado.`
-    // );
-
     toast.success(() => (
       <ToastMessage>
         <img src={PikachuFound} alt="" />{' '}
@@ -182,7 +177,7 @@ export default class Main extends Component {
                       alt={poke.name}
                     />
                     <p>
-                      <Link to={`/pokemon/${poke.name}`}>{poke.name}</Link>
+                      <Link to={`/search/${poke.name}`}>{poke.name}</Link>
                     </p>
                   </li>
                 ))}
