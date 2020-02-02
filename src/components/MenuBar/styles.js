@@ -14,6 +14,11 @@ export const HeaderContainer = styled.header`
   div {
     display: flex;
     align-items: center;
+
+    p {
+      margin-left: 5px;
+    }
+
     a {
       display: flex;
       align-items: center;

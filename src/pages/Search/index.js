@@ -9,9 +9,10 @@ import Api from '../../services/api';
 import PikachuFound from '../../assets/pokemon_found.svg';
 import PikachuMiss from '../../assets/pokemon_miss.svg';
 
-import Header from '../../components/Header';
+import MenuBar from '../../components/MenuBar';
 import Banner from '../../components/Banner';
 import Pokedex from '../../components/Pokedex';
+import WelcomeSearch from '../../components/WelcomeSearch';
 
 import {
   Form,
@@ -55,6 +56,8 @@ export default class Search extends Component {
     const { name } = match.params;
     if (name) {
       this.handleSubmit(name);
+    } else {
+      this.setState({ loading: false });
     }
   }
 
@@ -168,7 +171,7 @@ export default class Search extends Component {
 
     return (
       <Container>
-        <Header />
+        <MenuBar />
         <Banner />
         <Pokedex>
           <Form onSubmit={this.handleSearch}>
@@ -182,60 +185,64 @@ export default class Search extends Component {
               {loading ? <MdReplay size="16" /> : <MdSearch size="16" />}
             </SubmitButton>
           </Form>
-          <PokemonMinInfo>
-            {loading ? (
-              <>
-                <PhotoSkeleton />
-                <Sprites>
-                  <TagSkeleton>
+          {!pokemon.id ? (
+            <WelcomeSearch />
+          ) : (
+            <PokemonMinInfo>
+              {loading ? (
+                <>
+                  <PhotoSkeleton />
+                  <Sprites>
+                    <TagSkeleton>
+                      <p />
+                      <PokeSpriteSkeleton />
+                    </TagSkeleton>
+                    <TagSkeleton>
+                      <p />
+                      <PokeSpriteSkeleton />
+                    </TagSkeleton>
+                  </Sprites>
+                  <InfoSkeleton>
+                    <div />
+                    <div />
+                    <div />
                     <p />
-                    <PokeSpriteSkeleton />
-                  </TagSkeleton>
-                  <TagSkeleton>
-                    <p />
-                    <PokeSpriteSkeleton />
-                  </TagSkeleton>
-                </Sprites>
-                <InfoSkeleton>
-                  <div />
-                  <div />
-                  <div />
-                  <p />
-                </InfoSkeleton>
-              </>
-            ) : (
-              <>
-                <PokeID>#{pokemon.id}</PokeID>
-                <PokePhoto src={uriImage} />
-                <Sprites>
-                  <Tag>
-                    <p>Normal</p>
-                    <PokeSprite src={sprites.front_default} />
-                  </Tag>
-                  <Tag>
-                    <p>Shiny</p>
-                    <PokeSprite src={sprites.front_shiny} />
-                  </Tag>
-                </Sprites>
+                  </InfoSkeleton>
+                </>
+              ) : (
+                <>
+                  <PokeID>#{pokemon.id}</PokeID>
+                  <PokePhoto src={uriImage} />
+                  <Sprites>
+                    <Tag>
+                      <p>Normal</p>
+                      <PokeSprite src={sprites.front_default} />
+                    </Tag>
+                    <Tag>
+                      <p>Shiny</p>
+                      <PokeSprite src={sprites.front_shiny} />
+                    </Tag>
+                  </Sprites>
 
-                <Info>
-                  <div>
-                    <strong>Nome:</strong>
-                    <Name>
-                      <p>{pokemon.name}</p>
-                    </Name>
-                  </div>
-                  <div>
-                    <strong>Peso:</strong> <Name>{pokemon.weight}</Name>
-                  </div>
-                  <div>
-                    <strong>Altura:</strong> <Name>{pokemon.height}</Name>
-                  </div>
-                  <Link to={`/pokemon/${pokemon.name}`}>Mais Detalhes</Link>
-                </Info>
-              </>
-            )}
-          </PokemonMinInfo>
+                  <Info>
+                    <div>
+                      <strong>Nome:</strong>
+                      <Name>
+                        <p>{pokemon.name}</p>
+                      </Name>
+                    </div>
+                    <div>
+                      <strong>Peso:</strong> <Name>{pokemon.weight}</Name>
+                    </div>
+                    <div>
+                      <strong>Altura:</strong> <Name>{pokemon.height}</Name>
+                    </div>
+                    <Link to={`/pokemon/${pokemon.name}`}>Mais Detalhes</Link>
+                  </Info>
+                </>
+              )}
+            </PokemonMinInfo>
+          )}
         </Pokedex>
       </Container>
     );

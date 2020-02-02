@@ -4,7 +4,7 @@ import { MdAdd } from 'react-icons/md';
 
 import Api from '../../services/api';
 
-import Header from '../../components/Header';
+import MenuBar from '../../components/MenuBar';
 import Banner from '../../components/Banner';
 import Pokedex from '../../components/Pokedex';
 
@@ -62,7 +62,7 @@ export default class Home extends Component {
 
     return (
       <Container>
-        <Header />
+        <MenuBar />
         <Banner />
 
         <Pokedex>

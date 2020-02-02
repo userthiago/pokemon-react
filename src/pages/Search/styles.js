@@ -16,12 +16,15 @@ const rotate = keyframes`
 
 export const Form = styled.form`
   display: flex;
+  width: 100%;
+  margin-bottom: 40px;
   input {
+    flex: 1;
     padding: 8px 16px;
-    width: 500px;
-    height: 35px;
+    height: 50px;
     border-radius: 4px 0 0 4px;
     border: 1px solid #eee;
+    font-size: 16px;
   }
 `;
 
@@ -29,15 +32,18 @@ export const SubmitButton = styled.button.attrs(props => ({
   type: 'submit',
   disabled: props.loading,
 }))`
-  height: 35px;
-  width: 35px;
+  height: 50px;
+  width: 50px;
   border: 0;
   background: #7a0002;
   border-radius: 0 4px 4px 0;
   display: flex;
   align-items: center;
   justify-content: center;
+
   svg {
+    width: 25px;
+    height: 25px;
     color: white;
   }
 
@@ -136,7 +142,7 @@ export const PokeID = styled.div`
   width: 70px;
   text-align: center;
   color: #fff;
-  font-weigth: bold;
+  font-weight: bold;
 `;
 
 export const Name = styled.label`

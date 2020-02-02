@@ -1,25 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { MdSearch } from 'react-icons/md';
 import { HeaderContainer } from './styles';
 
-const Header = props => {
+const MenuBar = () => {
   return (
     <HeaderContainer>
       <div>
         <Link to="/">Home</Link>
-        <Link to="/">Informações</Link>
+        <Link to="/search">
+          <MdSearch /> <p>Buscar</p>
+        </Link>
       </div>
     </HeaderContainer>
   );
 };
 
-Header.defaultProps = {
-  children: PropTypes.node,
-};
-
-Header.propTypes = {
-  children: PropTypes.node,
-};
-
-export default Header;
+export default MenuBar;
