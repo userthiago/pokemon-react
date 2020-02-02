@@ -131,6 +131,24 @@ export const AddMoreButton = styled.button`
 export const PokemonMinInfo = styled.div`
   display: flex;
   justify-content: center;
+  border: 1px solid #444;
+  background: #999;
+  padding: 16px;
+  border-radius: 8px;
+  position: relative;
+`;
+
+export const PokeID = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 4px;
+  background: #444;
+  border-radius: 6px 0 4px 0;
+  width: 70px;
+  text-align: center;
+  color: #fff;
+  font-weigth: bold;
 `;
 
 export const PokePhoto = styled.img.attrs(props => ({ src: props.src }))`
@@ -213,7 +231,7 @@ export const Tag = styled.div`
   }
 `;
 
-export const TextTest = styled.div`
+export const ButtonToolTip = styled.div`
   margin-top: 16px;
   display: flex;
   flex-direction: column;
@@ -251,5 +269,18 @@ export const TextTest = styled.div`
   &:hover span {
     visibility: visible;
     opacity: 1;
+  }
+`;
+
+export const ToastMessage = styled.div`
+  display: flex;
+  align-items: center;
+  p {
+    margin-left: 5px;
+  }
+
+  img {
+    width: 40px;
+    margin: 0 15px 0 10px;
   }
 `;

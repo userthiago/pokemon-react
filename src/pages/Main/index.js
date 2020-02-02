@@ -9,8 +9,12 @@ import Header from '../../components/Header';
 import Banner from '../../components/Banner';
 import Pokedex from '../../components/Pokedex';
 
+import PikachuFound from '../../assets/pokemon_found.svg';
+import PikachuMiss from '../../assets/pokemon_miss.svg';
+
 import {
   PokemonMinInfo,
+  PokeID,
   Container,
   Form,
   SubmitButton,
@@ -23,7 +27,8 @@ import {
   Info,
   ButtonMoreDetails,
   Tag,
-  TextTest,
+  ButtonToolTip,
+  ToastMessage,
 } from './styles';
 
 export default class Main extends Component {
@@ -94,9 +99,12 @@ export default class Main extends Component {
 
     const { emptySearch } = this.state;
     if (emptySearch) {
-      toast.error('Nenhum pokémon encontrado.', {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      });
+      toast.error(() => (
+        <ToastMessage>
+          <img src={PikachuMiss} alt="" />
+          Nenhum pokémon encontrado.
+        </ToastMessage>
+      ));
       return this.setState({
         newPokemon: '',
         loading: false,
@@ -105,6 +113,22 @@ export default class Main extends Component {
     }
     const pokemonData = response.data;
     const pokemonSprites = response.data.sprites;
+
+    // toast.success(
+    //   `${pokemonData.name[0].toUpperCase() +
+    //     pokemonData.name.slice(1)} encontrado.`
+    // );
+
+    toast.success(() => (
+      <ToastMessage>
+        <img src={PikachuFound} alt="" />{' '}
+        <strong>
+          {pokemonData.name[0].toUpperCase() + pokemonData.name.slice(1)}
+        </strong>
+        <p>encontrado.</p>
+      </ToastMessage>
+    ));
+
     return this.setState({
       newPokemon: '',
       pokemon: pokemonData,
@@ -163,7 +187,7 @@ export default class Main extends Component {
                   </li>
                 ))}
               </PokemonList>
-              <TextTest>
+              <ButtonToolTip>
                 <AddMoreButton
                   type="button"
                   onClick={() => this.handleLoadMore()}
@@ -173,7 +197,7 @@ export default class Main extends Component {
                 <span className="tooltiptext">
                   Clique para buscar mais {pokemonPageMax} Pokémons
                 </span>
-              </TextTest>
+              </ButtonToolTip>
             </>
           ) : (
             <>
@@ -186,6 +210,7 @@ export default class Main extends Component {
                 Voltar para a lista
               </Link>
               <PokemonMinInfo>
+                <PokeID>#{pokemon.id}</PokeID>
                 <PokePhoto src={uriImage} />
                 <Sprites>
                   <Tag>
@@ -200,11 +225,7 @@ export default class Main extends Component {
 
                 <Info>
                   <div>
-                    <strong>Posição na Pokédex:</strong>{' '}
-                    <Name>{pokemon.id}</Name>
-                  </div>
-                  <div>
-                    <strong>Nome:</strong>{' '}
+                    <strong>Nome:</strong>
                     <Name>
                       <p>{pokemon.name}</p>
                     </Name>

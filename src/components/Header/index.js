@@ -1,16 +1,14 @@
-import styled from 'styled-components';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { HeaderContainer } from './styles';
 
-const Header = styled.header`
-  position: fixed;
-  width: 100%;
-  height: 60px;
-  top: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  background-color: #cc1416;
-  padding: 12px 0;
-`;
+const Header = props => {
+  const { children } = props;
+  return <HeaderContainer>{children}</HeaderContainer>;
+};
+
+Header.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export default Header;
