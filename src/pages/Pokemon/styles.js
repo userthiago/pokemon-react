@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import ImageReact from 'react-image';
 import pokeball from '../../assets/pokeball.svg';
 import ballSprite from '../../assets/pokeballSprite.png';
 
@@ -14,7 +15,7 @@ export const PokemonMinInfo = styled.div`
   position: relative;
 `;
 
-export const PokePhoto = styled.img.attrs(props => ({ src: props.src }))`
+export const PokePhoto = styled(ImageReact)`
   width: 200px;
   height: 200px;
   background-image: url(${pokeball});

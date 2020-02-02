@@ -14,6 +14,8 @@ import Banner from '../../components/Banner';
 import Pokedex from '../../components/Pokedex';
 import WelcomeSearch from '../../components/WelcomeSearch';
 
+import pikachu404 from '../../assets/404.png';
+
 import {
   Form,
   SubmitButton,
@@ -124,14 +126,16 @@ export default class Search extends Component {
   };
 
   handleSubmit = async name => {
-    const response = await Api.get(`/${name.toLowerCase()}`).catch(error => {
-      if (error.response.status === 404) {
-        this.setState({
-          emptySearch: true,
-        });
+    const response = await Api.get(`/pokemon/${name.toLowerCase()}`).catch(
+      error => {
+        if (error.response.status === 404) {
+          this.setState({
+            emptySearch: true,
+          });
+        }
+        return null;
       }
-      return null;
-    });
+    );
 
     const { emptySearch } = this.state;
 
@@ -212,7 +216,7 @@ export default class Search extends Component {
               ) : (
                 <>
                   <PokeID>#{pokemon.id}</PokeID>
-                  <PokePhoto src={uriImage} />
+                  <PokePhoto src={[uriImage, pikachu404]} />
                   <Sprites>
                     <Tag>
                       <p>Normal</p>

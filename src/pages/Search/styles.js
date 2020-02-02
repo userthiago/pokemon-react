@@ -1,4 +1,5 @@
 import styled, { keyframes, css } from 'styled-components';
+import ImageReact from 'react-image';
 import pokeball from '../../assets/pokeball.svg';
 import ballSprite from '../../assets/pokeballSprite.png';
 
@@ -75,7 +76,7 @@ export const PokemonMinInfo = styled.div`
   position: relative;
 `;
 
-export const PokePhoto = styled.img.attrs(props => ({ src: props.src }))`
+export const PokePhoto = styled(ImageReact)`
   width: 200px;
   height: 200px;
   background-image: url(${pokeball});
@@ -91,7 +92,7 @@ export const Sprites = styled.div`
   flex-direction: column;
 `;
 
-export const PokeSprite = styled.img.attrs(props => ({ src: props.src }))`
+export const PokeSprite = styled(ImageReact)`
   width: 100px;
   height: 100px;
   background-image: url(${ballSprite});

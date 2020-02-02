@@ -1,14 +1,21 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { MdAdd } from 'react-icons/md';
-
 import Api from '../../services/api';
 
 import MenuBar from '../../components/MenuBar';
 import Banner from '../../components/Banner';
 import Pokedex from '../../components/Pokedex';
 
-import { Container, PokemonList, AddMoreButton, ButtonToolTip } from './styles';
+import pikachu404 from '../../assets/404.png';
+
+import {
+  Container,
+  PokemonList,
+  PokePhoto,
+  AddMoreButton,
+  ButtonToolTip,
+} from './styles';
 
 export default class Home extends Component {
   constructor() {
@@ -40,7 +47,7 @@ export default class Home extends Component {
     this.setState({ loading: true });
 
     const response = await Api.get(
-      `?offset=${pokemonPageCount}&limit=${pokemonPageMax}`
+      `/pokemon?offset=${pokemonPageCount}&limit=${pokemonPageMax}`
     ).catch(error => {
       if (error.response.status === 404) {
         console.log('Acabou');
@@ -70,7 +77,10 @@ export default class Home extends Component {
             {pokemonsList.map(poke => (
               <li key={String(poke.name)}>
                 <div>#{poke.url.slice(34, -1)}</div>
-                <img src={this.changeLink(image, poke.url)} alt={poke.name} />
+                <PokePhoto
+                  src={[this.changeLink(image, poke.url), pikachu404]}
+                  alt={poke.name}
+                />
                 <p>
                   <Link to={`/search/${poke.name}`}>{poke.name}</Link>
                 </p>

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import ImageReact from 'react-image';
 import ballSprite from '../../assets/pokeballSprite.png';
 
 export const Container = styled.div``;
@@ -10,6 +11,8 @@ export const PokemonList = styled.ul`
   list-style: none;
 
   li {
+    height: 212px;
+    width: 154px;
     border: 2px solid #444;
     border-radius: 8px;
     background: #999;
@@ -35,6 +38,7 @@ export const PokemonList = styled.ul`
   }
 
   p {
+    bottom: 0;
     text-align: center;
     font-weight: bold;
     color: #fff;
@@ -54,6 +58,15 @@ export const PokemonList = styled.ul`
       }
     }
   }
+`;
+
+export const PokePhoto = styled(ImageReact)`
+  width: 150px;
+  height: 150px;
+  background-image: url(${ballSprite});
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 80%;
 `;
 
 export const AddMoreButton = styled.button`
