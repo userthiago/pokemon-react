@@ -9,7 +9,7 @@ export default function Routes() {
     <BrowserRouter>
       <Switch>
         <Route path="/" exact component={Main} />
-        <Route path="/pokemon" component={Pokemon} />
+        <Route path="/pokemon/:pokemon" component={Pokemon} />
       </Switch>
     </BrowserRouter>
   );

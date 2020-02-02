@@ -1,32 +1,24 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { MdSearch, MdReplay, MdAdd } from 'react-icons/md';
-import blue from '../../assets/ball.png';
-import green from '../../assets/green-ball.png';
-import red from '../../assets/red-ball.png';
-import yellow from '../../assets/yellow-ball.png';
-import logo from '../../assets/logo.png';
+import { toast } from 'react-toastify';
 
 import Api from '../../services/api';
+
+import Header from '../../components/Header';
+import Banner from '../../components/Banner';
+import Pokedex from '../../components/Pokedex';
 
 import {
   PokemonMinInfo,
   Container,
-  Header,
-  Logo,
   Form,
   SubmitButton,
-  Banner,
-  Pokemon,
-  Title,
-  Balls,
-  Ball,
   PokemonList,
   AddMoreButton,
   PokePhoto,
   PokeSprite,
   Name,
-  Content,
   Sprites,
   Info,
   ButtonMoreDetails,
@@ -59,7 +51,7 @@ export default class Main extends Component {
     this.setState({ newPokemon: e.target.value });
   };
 
-  testame = () => {
+  loadMore = () => {
     const { pokemonPageCount } = this.state;
     this.setState({ pokemonPageCount: pokemonPageCount + 20 }, () => {
       this.handleLoad();
@@ -81,8 +73,8 @@ export default class Main extends Component {
 
     this.setState({
       pokemonsList: [...pokemonsList, ...response.data.results],
+      loading: false,
     });
-    this.setState({ loading: false });
   };
 
   handleSubmit = async e => {
@@ -102,7 +94,9 @@ export default class Main extends Component {
 
     const { emptySearch } = this.state;
     if (emptySearch) {
-      console.log('Vazio');
+      toast.error('Nenhum pokémon encontrado.', {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
       return this.setState({
         newPokemon: '',
         loading: false,
@@ -150,93 +144,80 @@ export default class Main extends Component {
           </Form>
         </Header>
 
-        <Banner>
-          <Logo src={logo} />
-          <h1>Pokédex React</h1>
-        </Banner>
+        <Banner />
 
-        <Pokemon>
-          <Title>
-            <Balls>
-              <Ball src={blue} />
-              <Ball src={red} />
-              <Ball src={yellow} />
-              <Ball src={green} />
-            </Balls>
-          </Title>
-          <Content>
-            {!pokemon.id ? (
-              <>
-                <PokemonList>
-                  {pokemonsList.map(poke => (
-                    <li key={String(poke.name)}>
-                      <div>#{poke.url.slice(34, -1)}</div>
-                      <img
-                        src={this.changeLink(image, poke.url)}
-                        alt={poke.name}
-                      />
-                      <p>
-                        <a href="/">{poke.name}</a>
-                      </p>
-                    </li>
-                  ))}
-                </PokemonList>
-                <TextTest>
-                  <AddMoreButton type="button" onClick={() => this.testame()}>
-                    <MdAdd size="40" />
-                  </AddMoreButton>
-                  <span className="tooltiptext">
-                    Clique para buscar mais {pokemonPageMax} Pokémons
-                  </span>
-                </TextTest>
-              </>
-            ) : (
-              <>
-                <Link
-                  onClick={() => {
-                    this.setState({ pokemon: {} });
-                  }}
-                  to="/"
-                >
-                  Voltar para a lista
-                </Link>
-                <PokemonMinInfo>
-                  <PokePhoto src={uriImage} />
-                  <Sprites>
-                    <Tag>
-                      <p>Normal</p>
-                      <PokeSprite src={sprites.front_default} />
-                    </Tag>
-                    <Tag>
-                      <p>Shiny</p>
-                      <PokeSprite src={sprites.front_shiny} />
-                    </Tag>
-                  </Sprites>
+        <Pokedex>
+          {!pokemon.id ? (
+            <>
+              <PokemonList>
+                {pokemonsList.map(poke => (
+                  <li key={String(poke.name)}>
+                    <div>#{poke.url.slice(34, -1)}</div>
+                    <img
+                      src={this.changeLink(image, poke.url)}
+                      alt={poke.name}
+                    />
+                    <p>
+                      <Link to={`/pokemon/${poke.name}`}>{poke.name}</Link>
+                    </p>
+                  </li>
+                ))}
+              </PokemonList>
+              <TextTest>
+                <AddMoreButton type="button" onClick={() => this.loadMore()}>
+                  <MdAdd size="40" />
+                </AddMoreButton>
+                <span className="tooltiptext">
+                  Clique para buscar mais {pokemonPageMax} Pokémons
+                </span>
+              </TextTest>
+            </>
+          ) : (
+            <>
+              <Link
+                onClick={() => {
+                  this.setState({ pokemon: {} });
+                }}
+                to="/"
+              >
+                Voltar para a lista
+              </Link>
+              <PokemonMinInfo>
+                <PokePhoto src={uriImage} />
+                <Sprites>
+                  <Tag>
+                    <p>Normal</p>
+                    <PokeSprite src={sprites.front_default} />
+                  </Tag>
+                  <Tag>
+                    <p>Shiny</p>
+                    <PokeSprite src={sprites.front_shiny} />
+                  </Tag>
+                </Sprites>
 
-                  <Info>
-                    <div>
-                      <strong>Posição na Pokédex:</strong>{' '}
-                      <Name>{pokemon.id}</Name>
-                    </div>
-                    <div>
-                      <strong>Nome:</strong>{' '}
-                      <Name>
-                        <p>{pokemon.name}</p>
-                      </Name>
-                    </div>
-                    <div>
-                      <strong>Peso:</strong> <Name>{pokemon.weight}</Name>
-                    </div>
-                    <div>
-                      <strong>Altura:</strong> <Name>{pokemon.height}</Name>
-                    </div>
-                    <ButtonMoreDetails>Mais Detalhes</ButtonMoreDetails>
-                  </Info>
-                </PokemonMinInfo>
-              </>
-            )}
-          </Content>
-        </Pokemon>
+                <Info>
+                  <div>
+                    <strong>Posição na Pokédex:</strong>{' '}
+                    <Name>{pokemon.id}</Name>
+                  </div>
+                  <div>
+                    <strong>Nome:</strong>{' '}
+                    <Name>
+                      <p>{pokemon.name}</p>
+                    </Name>
+                  </div>
+                  <div>
+                    <strong>Peso:</strong> <Name>{pokemon.weight}</Name>
+                  </div>
+                  <div>
+                    <strong>Altura:</strong> <Name>{pokemon.height}</Name>
+                  </div>
+                  <ButtonMoreDetails>Mais Detalhes</ButtonMoreDetails>
+                </Info>
+              </PokemonMinInfo>
+            </>
+          )}
+        </Pokedex>
       </Container>
     );
   }
