@@ -15,7 +15,6 @@ export const PokemonContainer = styled.div`
   background: #eee;
   padding: 16px;
   border-radius: 0 0 8px 8px;
-  position: relative;
 `;
 
 export const PokeTitle = styled.div`
@@ -46,6 +45,13 @@ export const PokeInfo = styled.div`
 export const PokeImages = styled.div`
   display: flex;
   align-items: center;
+  flex-direction: column;
+`;
+
+export const PokeImagesContent = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
 `;
 
 export const PokePhoto = styled(ImageReact)`
@@ -91,63 +97,6 @@ export const Tag = styled.div`
   }
 `;
 
-export const InfoContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 100%;
-  margin-left: 24px;
-  border: 2px solid #444;
-  border-radius: 8px;
-
-  h3 {
-    background: #444;
-    padding: 4px 8px;
-    color: #fff;
-  }
-`;
-
-export const Info = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-export const Stats = styled.table`
-  width: 50%;
-  margin: 10px;
-  background: #ddd;
-  padding: 8px;
-  border-radius: 4px;
-`;
-
-export const BarStats = styled.td`
-  background: #bbb;
-  width: 70%;
-  height: 24px;
-  border-radius: 4px;
-  div {
-    display: flex;
-    align-items: center;
-    background: green;
-    padding: 2px 10px;
-    width: ${props => (props.stat * 100) / 255}%;
-    height: 100%;
-    border-radius: 4px;
-  }
-`;
-
-export const Basic = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-  p {
-    padding: 10px 12px;
-    background: #ddd;
-    border-radius: 4px;
-    margin: 8px;
-  }
-`;
-
 export const Types = styled.div`
   list-style: none;
   display: flex;
@@ -182,6 +131,116 @@ export const TypeColor = styled.li`
 
   div::first-letter {
     text-transform: uppercase;
+  }
+`;
+
+export const InfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  margin-left: 24px;
+  border: 2px solid #444;
+  border-radius: 8px;
+
+  h3 {
+    background: #444;
+    padding: 4px 8px;
+    color: #fff;
+  }
+`;
+
+export const Info = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const Basic = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+
+  h3 {
+    border-radius: 4px;
+    background: #888;
+    padding: 4px 8px;
+    color: #fff;
+    margin: 0 8px;
+  }
+
+  p {
+    font-size: 16px;
+    font-weight: bold;
+    background: #ddd;
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin: 4px 8px;
+
+    & + p {
+      margin-bottom: 8px;
+    }
+  }
+`;
+
+export const AbilitiesContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 8px 8px 8px;
+`;
+
+export const AbilitiesContent = styled.ul`
+  list-style: none;
+
+  li {
+    font-size: 16px;
+    font-weight: bold;
+    background: #ddd;
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-top: 4px;
+  }
+
+  div::first-letter {
+    text-transform: uppercase;
+  }
+`;
+
+export const StatsContainer = styled.div`
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 8px;
+
+  h3 {
+    border-radius: 4px;
+    background: #888;
+    padding: 4px 8px;
+    color: #fff;
+    margin: 0 8px;
+  }
+`;
+
+export const StatsContent = styled.table`
+  margin: 4px 8px 8px 8px;
+  background: #ddd;
+  padding: 8px;
+  border-radius: 4px;
+`;
+
+export const BarStats = styled.td`
+  background: #bbb;
+  width: 70%;
+  height: 24px;
+  border-radius: 4px;
+  div {
+    display: flex;
+    align-items: center;
+    background: green;
+    padding: 2px 10px;
+    width: ${props => (props.stat * 100) / 255}%;
+    height: 100%;
+    border-radius: 4px;
   }
 `;
 
@@ -256,6 +315,46 @@ export const Evolution = styled.div`
     }
   }
 `;
+
+export const MovesContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  border: 2px solid #444;
+  border-radius: 8px;
+  margin-top: 16px;
+
+  h3 {
+    color: #fff;
+    background: #444;
+    padding: 4px 8px;
+  }
+`;
+
+export const MovesContent = styled.table`
+  border-collapse: collapse;
+  tr:nth-child(even) {
+    background-color: #ddd;
+  }
+
+  th {
+    color: #fff;
+    background: #555;
+    padding: 8px 4px;
+  }
+
+  td {
+    text-align: center;
+    font-size: 16px;
+    padding: 8px 4px;
+  }
+
+  td::first-letter {
+    text-transform: uppercase;
+  }
+`;
+
 export const ToastMessage = styled.div`
   display: flex;
   align-items: center;

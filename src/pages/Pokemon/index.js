@@ -19,8 +19,10 @@ import {
   PokeTitle,
   PokeInfo,
   PokeImages,
+  PokeImagesContent,
   Sprites,
-  Stats,
+  StatsContainer,
+  StatsContent,
   BarStats,
   Basic,
   Types,
@@ -33,6 +35,10 @@ import {
   InfoContainer,
   Info,
   Tag,
+  AbilitiesContainer,
+  AbilitiesContent,
+  MovesContainer,
+  MovesContent,
   ToastMessage,
 } from './styles';
 
@@ -127,6 +133,8 @@ export default class Pokemon extends Component {
       [evoData] = [evoData.evolves_to[0]];
       // eslint-disable-next-line no-prototype-builtins
     } while (!!evoData && evoData.hasOwnProperty('evolves_to'));
+
+    console.log(response.data);
 
     return this.setState({
       pokemon: response.data,
@@ -228,123 +236,155 @@ export default class Pokemon extends Component {
       return <Redirect to="/search" />;
     }
 
+    if (loading) {
+      return '<div>Carregando...</div>';
+    }
+
     return (
       <Container>
         <MenuBar />
         <Banner />
         <Pokedex>
-          {loading ? (
-            <div>Carregando...</div>
-          ) : (
-            <>
-              {/* <h1>abilities</h1>
-              {abilities.map((pokeAbility, i) => (
-                <li key={i}>
-                  <div>{pokeAbility.ability.name}</div>
-                </li>
-              ))} */}
-              {/* <h1>moves</h1>
-              {moves.map((pokeMove, i) => (
-                <li key={i}>
-                  <div>{pokeMove.move.name}</div>
-                </li>
-              ))} */}
+          <PokeTitle>
+            <h1>{pokemon.name}</h1>
+            <h1>#{pokemon.id}</h1>
+          </PokeTitle>
+          <PokemonContainer>
+            <PokeInfo>
+              <PokeImages>
+                <PokeImagesContent>
+                  <PokePhoto src={[uriImage, pikachu404]} alt={pokemon.name} />
+                  <Sprites>
+                    <Tag>
+                      <p>Normal</p>
+                      <PokeSprite src={sprites.front_default} />
+                    </Tag>
+                    <Tag>
+                      <p>Shiny</p>
+                      <PokeSprite src={sprites.front_shiny} />
+                    </Tag>
+                  </Sprites>
+                </PokeImagesContent>
+                <Types>
+                  {types.map((pokeType, i) => (
+                    <TypeColor
+                      typeColor={this.getColorType(pokeType.type.name)}
+                      key={i}
+                    >
+                      <div>{pokeType.type.name}</div>
+                    </TypeColor>
+                  ))}
+                </Types>
+              </PokeImages>
+              <InfoContainer>
+                <h3>Informações Básicas</h3>
+                <Info>
+                  <Basic>
+                    <h3>Perfil</h3>
+                    <p>
+                      <strong>Peso:</strong> {pokemon.weight} Kg
+                    </p>
+                    <p>
+                      <strong>Altura:</strong> {(pokemon.height * 10) / 100} m
+                    </p>
+                    <h3>Habilidades</h3>
+                    <AbilitiesContainer>
+                      <AbilitiesContent>
+                        {abilities.map((pokeAbility, i) => (
+                          <li key={i}>
+                            <div>{pokeAbility.ability.name}</div>
+                          </li>
+                        ))}
+                      </AbilitiesContent>
+                    </AbilitiesContainer>
+                  </Basic>
+                  <StatsContainer>
+                    <h3>Atributos</h3>
+                    <StatsContent>
+                      <tbody>
+                        {stats.reverse().map((pokeStats, i) => (
+                          <tr key={i}>
+                            <td>
+                              <strong>
+                                {this.transformTextStat(pokeStats.stat.name)}
+                              </strong>
+                            </td>
+                            <BarStats stat={pokeStats.base_stat}>
+                              <div>{pokeStats.base_stat}</div>
+                            </BarStats>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </StatsContent>
+                  </StatsContainer>
+                </Info>
+              </InfoContainer>
+            </PokeInfo>
 
-              <PokeTitle>
-                <h1>{pokemon.name}</h1>
-                <h1>#{pokemon.id}</h1>
-              </PokeTitle>
-              <PokemonContainer>
-                <PokeInfo>
-                  <PokeImages>
-                    <PokePhoto
-                      src={[uriImage, pikachu404]}
-                      alt={pokemon.name}
-                    />
-                    <Sprites>
-                      <Tag>
-                        <p>Normal</p>
-                        <PokeSprite src={sprites.front_default} />
-                      </Tag>
-                      <Tag>
-                        <p>Shiny</p>
-                        <PokeSprite src={sprites.front_shiny} />
-                      </Tag>
-                    </Sprites>
-                  </PokeImages>
-                  <InfoContainer>
-                    <h3>Informações Básicas</h3>
-                    <Info>
-                      <Basic>
-                        <Types>
-                          {types.map((pokeType, i) => (
-                            <TypeColor
-                              typeColor={this.getColorType(pokeType.type.name)}
-                              key={i}
-                            >
-                              <div>{pokeType.type.name}</div>
-                            </TypeColor>
-                          ))}
-                        </Types>
-                        <p>
-                          <strong>Peso:</strong> {pokemon.weight} Kg
-                        </p>
-                        <p>
-                          <strong>Altura:</strong> {(pokemon.height * 10) / 100}{' '}
-                          m
-                        </p>
-                      </Basic>
-                      <Stats>
-                        <tbody>
-                          {stats.reverse().map((pokeStats, i) => (
-                            <tr key={i}>
-                              <td>
-                                <strong>
-                                  {this.transformTextStat(pokeStats.stat.name)}
-                                </strong>
-                              </td>
-                              <BarStats stat={pokeStats.base_stat}>
-                                <div>{pokeStats.base_stat}</div>
-                              </BarStats>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </Stats>
-                    </Info>
-                  </InfoContainer>
-                </PokeInfo>
+            <EvolutionContainer>
+              <h3>Evoluções</h3>
+              <EvolutionContent>
+                {evolutionChain.map((evolution, i, arr) => (
+                  <li key={i}>
+                    <Evolution>
+                      <img
+                        src={this.makeLink(pokemon.id, image, evolution.url)}
+                        alt={evolution.species_name}
+                      />
+                      <div>
+                        <p>{evolution.species_name}</p>
+                      </div>
+                      <div>Level {evolution.min_level}</div>
+                    </Evolution>
+                    {arr.length - 1 !== i ? <MdKeyboardArrowRight /> : <></>}
+                  </li>
+                ))}
+              </EvolutionContent>
+            </EvolutionContainer>
 
-                <EvolutionContainer>
-                  <h3>Evoluções</h3>
-                  <EvolutionContent>
-                    {evolutionChain.map((evolution, i, arr) => (
-                      <li key={i}>
-                        <Evolution>
-                          <img
-                            src={this.makeLink(
-                              pokemon.id,
-                              image,
-                              evolution.url
-                            )}
-                            alt={evolution.species_name}
-                          />
-                          <div>
-                            <p>{evolution.species_name}</p>
-                          </div>
-                          <div>Level {evolution.min_level}</div>
-                        </Evolution>
-                        {arr.length - 1 !== i ? (
-                          <MdKeyboardArrowRight />
-                        ) : (
-                          <></>
-                        )}
-                      </li>
+            <MovesContainer>
+              <h3>Ataques</h3>
+              <MovesContent>
+                <tbody>
+                  <tr>
+                    <th>Ataque</th>
+                    <th>Nível</th>
+                    <th>Método</th>
+                  </tr>
+                  {moves
+                    .sort((a, b) => {
+                      if (
+                        a.version_group_details[0].level_learned_at >
+                        b.version_group_details[0].level_learned_at
+                      ) {
+                        return 1;
+                      }
+                      if (
+                        a.version_group_details[0].level_learned_at <
+                        b.version_group_details[0].level_learned_at
+                      ) {
+                        return -1;
+                      }
+                      return 0;
+                    })
+                    .map((pokeMove, i) => (
+                      <tr key={i}>
+                        <td>
+                          {pokeMove.version_group_details[0].level_learned_at}
+                        </td>
+                        <td>{pokeMove.move.name}</td>
+                        <td>
+                          {
+                            pokeMove.version_group_details[0].move_learn_method
+                              .name
+                          }
+                        </td>
+                      </tr>
                     ))}
-                  </EvolutionContent>
-                </EvolutionContainer>
-              </PokemonContainer>
-            </>
-          )}
+                </tbody>
+              </MovesContent>
+            </MovesContainer>
+          </PokemonContainer>
         </Pokedex>
       </Container>
     );
