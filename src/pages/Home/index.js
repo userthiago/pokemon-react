@@ -7,6 +7,7 @@ import MenuBar from '../../components/MenuBar';
 import Banner from '../../components/Banner';
 import Pokedex from '../../components/Pokedex';
 import Footer from '../../components/Footer';
+import Loading from '../../components/Loading';
 
 import pikachu404 from '../../assets/404.png';
 
@@ -72,30 +73,38 @@ export default class Home extends Component {
       <Container>
         <MenuBar />
         <Banner />
-
         <Pokedex>
-          <PokemonList>
-            {pokemonsList.map(poke => (
-              <li key={String(poke.name)}>
-                <div>#{poke.url.slice(34, -1)}</div>
-                <PokePhoto
-                  src={[this.changeLink(image, poke.url), pikachu404]}
-                  alt={poke.name}
-                />
-                <p>
-                  <Link to={`/search/${poke.name}`}>{poke.name}</Link>
-                </p>
-              </li>
-            ))}
-          </PokemonList>
-          <ButtonToolTip>
-            <AddMoreButton type="button" onClick={() => this.handleLoadMore()}>
-              <MdAdd size="40" />
-            </AddMoreButton>
-            <span className="tooltiptext">
-              Clique para buscar mais {pokemonPageMax} Pokémons
-            </span>
-          </ButtonToolTip>
+          {loading ? (
+            <Loading />
+          ) : (
+            <>
+              <PokemonList>
+                {pokemonsList.map(poke => (
+                  <li key={String(poke.name)}>
+                    <div>#{poke.url.slice(34, -1)}</div>
+                    <PokePhoto
+                      src={[this.changeLink(image, poke.url), pikachu404]}
+                      alt={poke.name}
+                    />
+                    <p>
+                      <Link to={`/search/${poke.name}`}>{poke.name}</Link>
+                    </p>
+                  </li>
+                ))}
+              </PokemonList>
+              <ButtonToolTip>
+                <AddMoreButton
+                  type="button"
+                  onClick={() => this.handleLoadMore()}
+                >
+                  <MdAdd size="40" />
+                </AddMoreButton>
+                <span className="tooltiptext">
+                  Clique para buscar mais {pokemonPageMax} Pokémons
+                </span>
+              </ButtonToolTip>
+            </>
+          )}
         </Pokedex>
         <Footer />
       </Container>
