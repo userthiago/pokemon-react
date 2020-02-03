@@ -7,7 +7,6 @@ import MenuBar from '../../components/MenuBar';
 import Banner from '../../components/Banner';
 import Pokedex from '../../components/Pokedex';
 import Footer from '../../components/Footer';
-import Loading from '../../components/Loading';
 
 import pikachu404 from '../../assets/404.png';
 
@@ -23,7 +22,6 @@ export default class Home extends Component {
   constructor() {
     super();
     this.state = {
-      loading: false,
       pokemonPageCount: 0,
       pokemonPageMax: 20,
       pokemonsList: [],
@@ -46,15 +44,12 @@ export default class Home extends Component {
   handleLoad = async () => {
     const { pokemonsList, pokemonPageCount, pokemonPageMax } = this.state;
 
-    this.setState({ loading: true });
-
     const response = await Api.get(
       `/pokemon?offset=${pokemonPageCount}&limit=${pokemonPageMax}`
     );
 
     this.setState({
       pokemonsList: [...pokemonsList, ...response.data.results],
-      loading: false,
     });
   };
 
@@ -63,44 +58,35 @@ export default class Home extends Component {
   };
 
   render() {
-    const { loading, image, pokemonsList, pokemonPageMax } = this.state;
+    const { image, pokemonsList, pokemonPageMax } = this.state;
 
     return (
       <Container>
         <MenuBar />
         <Banner />
         <Pokedex>
-          {loading ? (
-            <Loading />
-          ) : (
-            <>
-              <PokemonList>
-                {pokemonsList.map(poke => (
-                  <li key={String(poke.name)}>
-                    <div>#{poke.url.slice(34, -1)}</div>
-                    <PokePhoto
-                      src={[this.changeLink(image, poke.url), pikachu404]}
-                      alt={poke.name}
-                    />
-                    <p>
-                      <Link to={`/search/${poke.name}`}>{poke.name}</Link>
-                    </p>
-                  </li>
-                ))}
-              </PokemonList>
-              <ButtonToolTip>
-                <AddMoreButton
-                  type="button"
-                  onClick={() => this.handleLoadMore()}
-                >
-                  <MdAdd size="40" />
-                </AddMoreButton>
-                <span className="tooltiptext">
-                  Clique para buscar mais {pokemonPageMax} Pokémons
-                </span>
-              </ButtonToolTip>
-            </>
-          )}
+          <PokemonList>
+            {pokemonsList.map(poke => (
+              <li key={String(poke.name)}>
+                <div>#{poke.url.slice(34, -1)}</div>
+                <PokePhoto
+                  src={[this.changeLink(image, poke.url), pikachu404]}
+                  alt={poke.name}
+                />
+                <p>
+                  <Link to={`/search/${poke.name}`}>{poke.name}</Link>
+                </p>
+              </li>
+            ))}
+          </PokemonList>
+          <ButtonToolTip>
+            <AddMoreButton type="button" onClick={() => this.handleLoadMore()}>
+              <MdAdd size="40" />
+            </AddMoreButton>
+            <span className="tooltiptext">
+              Clique para buscar mais {pokemonPageMax} Pokémons
+            </span>
+          </ButtonToolTip>
         </Pokedex>
         <Footer />
       </Container>
