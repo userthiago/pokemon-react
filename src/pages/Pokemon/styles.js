@@ -17,7 +17,7 @@ export const PokemonContainer = styled.div`
   border-radius: 0 0 8px 8px;
 
   @media screen and (max-width: 500px) {
-    padding: 16px 0;
+    padding: 16px 0 0 0;
   }
 `;
 
@@ -305,6 +305,19 @@ export const EvolutionContent = styled.ul`
   li {
     display: flex;
     align-items: center;
+  }
+
+  @media screen and (max-width: 500px) {
+    flex-direction: column;
+    margin: 16px 0;
+
+    li {
+      flex-direction: column;
+    }
+
+    svg {
+      transform: rotate(90deg);
+    }
   }
 `;
 
