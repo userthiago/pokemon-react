@@ -51,6 +51,7 @@ export default class Pokemon extends Component {
       loading: true,
       redirect: false,
       emptySearch: false,
+      serverDown: false,
       pokemon: {},
       sprites: [],
       abilities: [],
@@ -70,23 +71,38 @@ export default class Pokemon extends Component {
   }
 
   handleLoad = async name => {
+    this.setState({ serverDown: false });
+
     const response = await Api.get(`/pokemon/${name.toLowerCase()}`).catch(
       error => {
-        if (error.response.status === 404) {
-          this.setState({
-            emptySearch: true,
+        if (!error.response) {
+          return this.setState({
+            serverDown: true,
           });
         }
-        return null;
+        return this.setState({
+          emptySearch: true,
+        });
       }
     );
 
-    const { emptySearch } = this.state;
+    const { emptySearch, serverDown } = this.state;
+
+    if (serverDown) {
+      return toast.warning(() => (
+        <ToastMessage>
+          <img src={PokemonInformation} alt="" />
+          Parece que o servidor de consulta está fora de área, tente novamente
+          mais tarde!.
+        </ToastMessage>
+      ));
+    }
+
     if (emptySearch || response.data.id > 807) {
       toast.warning(() => (
         <ToastMessage>
           <img src={PokemonInformation} alt="" />
-          Não há informação sobre {response.data.name}.
+          Não há informação sobre este pokémon.
         </ToastMessage>
       ));
       return this.setState({
@@ -99,23 +115,27 @@ export default class Pokemon extends Component {
     const pokemonSpecies = await Api.get(
       `/pokemon-species/${response.data.id}`
     ).catch(error => {
-      if (error.response.status === 404) {
-        this.setState({
-          emptySearch: true,
+      if (!error.response) {
+        return this.setState({
+          serverDown: true,
         });
       }
-      return null;
+      return this.setState({
+        emptySearch: true,
+      });
     });
 
     const evolution = await Api.get(
       `${pokemonSpecies.data.evolution_chain.url.slice(25, -1)}`
     ).catch(error => {
-      if (error.response.status === 404) {
-        this.setState({
-          emptySearch: true,
+      if (!error.response) {
+        return this.setState({
+          serverDown: true,
         });
       }
-      return null;
+      return this.setState({
+        emptySearch: true,
+      });
     });
 
     const evoChain = [];
@@ -280,6 +300,7 @@ export default class Pokemon extends Component {
     const { redirect, loading } = this.state;
     const {
       pokemon,
+      serverDown,
       image,
       sprites,
       evolutionChain,
@@ -292,6 +313,10 @@ export default class Pokemon extends Component {
     const uriImage = `${image + pokemon.id}.png`;
 
     if (redirect) {
+      return <Redirect to="/search" />;
+    }
+
+    if (serverDown) {
       return <Redirect to="/search" />;
     }
 

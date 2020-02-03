@@ -16,6 +16,7 @@ import Pokedex from '../../components/Pokedex';
 import Footer from '../../components/Footer';
 
 import pikachu404 from '../../assets/404.png';
+import PokemonInformation from '../../assets/pokemon_information.svg';
 
 import {
   Form,
@@ -45,6 +46,7 @@ export default class Search extends Component {
     this.state = {
       loading: true,
       emptySearch: false,
+      serverDown: false,
       newPokemon: '',
       pokemon: {},
       sprites: [],
@@ -77,18 +79,33 @@ export default class Search extends Component {
   };
 
   handleSubmit = async name => {
+    this.setState({ serverDown: false });
+
     const response = await Api.get(`/pokemon/${name.toLowerCase()}`).catch(
       error => {
-        if (error.response.status === 404) {
-          this.setState({
-            emptySearch: true,
+        if (!error.response) {
+          return this.setState({
+            serverDown: true,
+            loading: false,
           });
         }
-        return null;
+        return this.setState({
+          emptySearch: true,
+        });
       }
     );
 
-    const { emptySearch } = this.state;
+    const { emptySearch, serverDown } = this.state;
+
+    if (serverDown) {
+      return toast.warning(() => (
+        <ToastMessage>
+          <img src={PokemonInformation} alt="" />
+          Parece que o servidor de consulta está fora de área, tente novamente
+          mais tarde!.
+        </ToastMessage>
+      ));
+    }
 
     if (emptySearch) {
       toast.error(() => (

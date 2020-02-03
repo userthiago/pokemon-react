@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const PhotoSkeleton = styled.div`
-  width: 200px;
-  height: 200px;
+  min-width: 200px;
+  min-height: 200px;
   border-radius: 50%;
   background: #ddd;
 `;

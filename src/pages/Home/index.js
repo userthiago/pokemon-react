@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { MdAdd } from 'react-icons/md';
+import { toast } from 'react-toastify';
 import Api from '../../services/api';
 
 import MenuBar from '../../components/MenuBar';
@@ -9,6 +10,7 @@ import Pokedex from '../../components/Pokedex';
 import Footer from '../../components/Footer';
 
 import pikachu404 from '../../assets/404.png';
+import PokemonInformation from '../../assets/pokemon_information.svg';
 
 import {
   Container,
@@ -16,6 +18,7 @@ import {
   PokePhoto,
   AddMoreButton,
   ButtonToolTip,
+  ToastMessage,
 } from './styles';
 
 export default class Home extends Component {
@@ -24,6 +27,7 @@ export default class Home extends Component {
     this.state = {
       pokemonPageCount: 0,
       pokemonPageMax: 20,
+      serverDown: false,
       pokemonsList: [],
       image:
         'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other-sprites/official-artwork/',
@@ -42,13 +46,34 @@ export default class Home extends Component {
   };
 
   handleLoad = async () => {
+    this.setState({ serverDown: false });
+
     const { pokemonsList, pokemonPageCount, pokemonPageMax } = this.state;
 
     const response = await Api.get(
       `/pokemon?offset=${pokemonPageCount}&limit=${pokemonPageMax}`
-    );
+    ).catch(error => {
+      if (!error.response) {
+        return this.setState({
+          serverDown: true,
+        });
+      }
+      return null;
+    });
 
-    this.setState({
+    const { serverDown } = this.state;
+
+    if (serverDown) {
+      return toast.warning(() => (
+        <ToastMessage>
+          <img src={PokemonInformation} alt="" />
+          Parece que o servidor de consulta está fora de área, tente novamente
+          mais tarde!.
+        </ToastMessage>
+      ));
+    }
+
+    return this.setState({
       pokemonsList: [...pokemonsList, ...response.data.results],
     });
   };
@@ -58,7 +83,11 @@ export default class Home extends Component {
   };
 
   render() {
-    const { image, pokemonsList, pokemonPageMax } = this.state;
+    const { image, pokemonsList, pokemonPageMax, serverDown } = this.state;
+
+    if (serverDown) {
+      return <Redirect to="/search" />;
+    }
 
     return (
       <Container>

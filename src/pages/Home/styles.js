@@ -125,3 +125,16 @@ export const ButtonToolTip = styled.div`
     opacity: 1;
   }
 `;
+
+export const ToastMessage = styled.div`
+  display: flex;
+  align-items: center;
+  p {
+    margin-left: 5px;
+  }
+
+  img {
+    width: 40px;
+    margin: 0 15px 0 10px;
+  }
+`;
