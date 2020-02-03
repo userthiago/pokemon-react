@@ -50,11 +50,7 @@ export default class Home extends Component {
 
     const response = await Api.get(
       `/pokemon?offset=${pokemonPageCount}&limit=${pokemonPageMax}`
-    ).catch(error => {
-      if (error.response.status === 404) {
-        console.log('Acabou');
-      }
-    });
+    );
 
     this.setState({
       pokemonsList: [...pokemonsList, ...response.data.results],
