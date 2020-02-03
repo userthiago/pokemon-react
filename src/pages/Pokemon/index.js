@@ -65,7 +65,6 @@ export default class Pokemon extends Component {
     const { match } = this.props;
     const pokemonName = match.params.pokemon;
     this.handleLoad(pokemonName);
-    // console.log(pokemonName);
   }
 
   handleLoad = async name => {

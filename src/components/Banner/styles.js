@@ -11,14 +11,14 @@ const bannerMove = keyframes`
 `;
 
 export const BannerContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-position: 0 0;
   flex: 1;
   background-image: url(${bg});
   height: 200px;
   padding: 0 120px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   margin-top: 60px;
 
   animation: ${bannerMove} 60s forwards linear infinite;
@@ -27,9 +27,18 @@ export const BannerContainer = styled.div`
     color: #fff;
     font-size: 50px;
   }
+
+  @media screen and (max-width: 500px) {
+    height: 300px;
+    flex-direction: column;
+    text-align: center;
+  }
 `;
 
 export const Logo = styled.img`
   width: 120px;
   margin-right: 16px;
+  @media screen and (max-width: 500px) {
+    margin: 0;
+  }
 `;

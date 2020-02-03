@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const HeaderContainer = styled.header`
+  z-index: 100;
   position: fixed;
   width: 100%;
   height: 60px;
@@ -30,12 +31,16 @@ export const HeaderContainer = styled.header`
       border-radius: 4px;
 
       & + a {
-        margin: 10px;
+        margin-left: 10px;
       }
 
       &:hover {
         background: #8b0002;
       }
     }
+  }
+
+  @media screen and (max-width: 500px) {
+    justify-content: center;
   }
 `;

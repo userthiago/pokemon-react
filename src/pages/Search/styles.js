@@ -74,6 +74,24 @@ export const PokemonMinInfo = styled.div`
   padding: 16px;
   border-radius: 8px;
   position: relative;
+  width: 50%;
+
+  @media screen and (max-width: 1300px) {
+    width: 60%;
+  }
+
+  @media screen and (max-width: 1050px) {
+    width: 70%;
+  }
+
+  @media screen and (max-width: 850px) {
+    width: 90%;
+  }
+
+  @media screen and (max-width: 650px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 export const PokePhoto = styled(ImageReact)`
@@ -90,6 +108,10 @@ export const PokePhoto = styled(ImageReact)`
 export const Sprites = styled.div`
   display: flex;
   flex-direction: column;
+  @media screen and (max-width: 650px) {
+    flex-direction: row;
+    margin-bottom: 16px;
+  }
 `;
 
 export const PokeSprite = styled(ImageReact)`
@@ -106,7 +128,7 @@ export const Info = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 450px;
+  width: 100%;
   margin-left: 24px;
 
   div {
@@ -122,7 +144,7 @@ export const Info = styled.div`
     border: 0;
     background: #8b0002;
     padding: 5px 20px;
-    width: 450px;
+    width: 100%;
     height: 30px;
     border-radius: 4px;
     text-transform: uppercase;
@@ -130,6 +152,18 @@ export const Info = styled.div`
     text-decoration: none;
     font-weight: bold;
     color: #fff;
+  }
+
+  @media screen and (max-width: 650px) {
+    margin: 0;
+
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      height: 60px;
+    }
   }
 `;
 

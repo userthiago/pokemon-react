@@ -5,7 +5,15 @@ export const PokedexHeader = styled.div`
   border-radius: 10px;
   border: 3px solid #000;
   flex: 1;
-  margin: 20px 15%;
+  margin: 20px 10%;
+
+  @media screen and (max-width: 1400px) {
+    margin: 20px 5%;
+  }
+
+  @media screen and (max-width: 1150px) {
+    margin: 20px 0;
+  }
 `;
 
 export const Title = styled.div`
@@ -32,6 +40,10 @@ export const Content = styled.div`
   align-items: center;
   border-radius: 0 0 6px 6px;
   padding: 40px 20px;
+
+  @media screen and (max-width: 500px) {
+    padding: 40px 0px;
+  }
 `;
 
 export const Balls = styled.div`

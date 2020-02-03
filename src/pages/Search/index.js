@@ -191,9 +191,7 @@ export default class Search extends Component {
                     <div>
                       <strong>Altura:</strong> <Name>{pokemon.height}</Name>
                     </div>
-                    <Link to={`/pokemon/${pokemon.name}`} disable>
-                      Mais Detalhes
-                    </Link>
+                    <Link to={`/pokemon/${pokemon.name}`}>Mais Detalhes</Link>
                   </Info>
                 </>
               )}

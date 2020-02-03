@@ -15,6 +15,10 @@ export const PokemonContainer = styled.div`
   background: #eee;
   padding: 16px;
   border-radius: 0 0 8px 8px;
+
+  @media screen and (max-width: 500px) {
+    padding: 16px 0;
+  }
 `;
 
 export const PokeTitle = styled.div`
@@ -40,12 +44,18 @@ export const PokeInfo = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
+  @media screen and (max-width: 800px) {
+    flex-direction: column;
+  }
 `;
 
 export const PokeImages = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
+  @media screen and (max-width: 800px) {
+    margin-bottom: 16px;
+  }
 `;
 
 export const PokeImagesContent = styled.div`
@@ -148,11 +158,19 @@ export const InfoContainer = styled.div`
     padding: 4px 8px;
     color: #fff;
   }
+
+  @media screen and (max-width: 800px) {
+    margin: 0;
+  }
 `;
 
 export const Info = styled.div`
   display: flex;
   align-items: center;
+
+  @media screen and (max-width: 500px) {
+    flex-direction: column;
+  }
 `;
 
 export const Basic = styled.div`
@@ -180,6 +198,10 @@ export const Basic = styled.div`
     & + p {
       margin-bottom: 8px;
     }
+  }
+
+  @media screen and (max-width: 500px) {
+    width: 100%;
   }
 `;
 
@@ -219,6 +241,10 @@ export const StatsContainer = styled.div`
     padding: 4px 8px;
     color: #fff;
     margin: 0 8px;
+  }
+
+  @media screen and (max-width: 500px) {
+    width: 100%;
   }
 `;
 
@@ -326,7 +352,7 @@ export const MovesContainer = styled.div`
   justify-content: center;
   width: 100%;
   border: 2px solid #444;
-  border-radius: 8px;
+  border-radius: 8px 8px 0 0;
   margin-top: 16px;
 
   h3 {
