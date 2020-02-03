@@ -11,13 +11,21 @@ import Pokedex from '../../components/Pokedex';
 import pikachu404 from '../../assets/404.png';
 
 import {
-  PokemonMinInfo,
-  PokeID,
   Container,
+  PokemonContainer,
+  PokeTitle,
+  PokeInfo,
+  PokeImages,
+  Stats,
+  BarStats,
+  Basic,
+  Types,
+  TypeColor,
   PokePhoto,
   PokeSprite,
   Name,
   Sprites,
+  InfoContainer,
   Info,
   Tag,
 } from './styles';
@@ -131,6 +139,68 @@ export default class Pokemon extends Component {
     return link;
   };
 
+  transformTextStat = name => {
+    switch (name) {
+      case 'hp':
+        return 'HP:';
+      case 'attack':
+        return 'Ataque:';
+      case 'defense':
+        return 'Defesa:';
+      case 'special-attack':
+        return 'Ataque Especial:';
+      case 'special-defense':
+        return 'Defesa Especial:';
+      case 'speed':
+        return 'Velocidade:';
+      default:
+        return 'Indefinido:';
+    }
+  };
+
+  getColorType = type => {
+    switch (type) {
+      case 'normal':
+        return '#aba49a';
+      case 'fire':
+        return '#ff4b32';
+      case 'water':
+        return '#3e9cff';
+      case 'electric':
+        return '#f6bf27';
+      case 'grass':
+        return '#7fce4f';
+      case 'ice':
+        return '#58caec';
+      case 'fight':
+        return '#a55135';
+      case 'poison':
+        return '#b25c9d';
+      case 'ground':
+        return '#d3bf4c';
+      case 'flying':
+        return '#a1a6fa';
+      case 'psychic':
+        return '#fc77a6';
+      case 'bug':
+        return '#a2ba1a';
+      case 'rock':
+        return '#b7a251';
+      case 'ghost':
+        return '#6261af';
+      case 'dragon':
+        return '#7d61ea';
+      case 'steel':
+        return '#adafc6';
+      case 'dark':
+        return '#775c47';
+      case 'fairy':
+        return '#f8b8f5';
+      default:
+        return '#bebebe';
+    }
+  };
+
   render() {
     const { redirect, loading } = this.state;
     const {
@@ -145,7 +215,6 @@ export default class Pokemon extends Component {
     } = this.state;
 
     const uriImage = `${image + pokemon.id}.png`;
-    const fileType = '.png';
 
     if (redirect) {
       return <Redirect to="/search" />;
@@ -160,7 +229,7 @@ export default class Pokemon extends Component {
             <div>Carregando...</div>
           ) : (
             <>
-              <h1>Evolution</h1>
+              {/* <h1>Evolution</h1>
               {evolutionChain.map((evolution, i) => (
                 <li key={i}>
                   <div>{evolution.species_name}</div>
@@ -171,62 +240,83 @@ export default class Pokemon extends Component {
                     alt={evolution.species_name}
                   />
                 </li>
-              ))}
-              <h1>abilities</h1>
+              ))} */}
+              {/* <h1>abilities</h1>
               {abilities.map((pokeAbility, i) => (
                 <li key={i}>
                   <div>{pokeAbility.ability.name}</div>
                 </li>
-              ))}
-              <h1>moves</h1>
+              ))} */}
+              {/* <h1>moves</h1>
               {moves.map((pokeMove, i) => (
                 <li key={i}>
                   <div>{pokeMove.move.name}</div>
                 </li>
-              ))}
-              <h1>stats</h1>
-              {stats.map((pokeStats, i) => (
-                <li key={i}>
-                  <div>{pokeStats.stat.name}</div>
-                  <div>{pokeStats.base_stat}</div>
-                </li>
-              ))}
-              <h1>types</h1>
-              {types.map((pokeType, i) => (
-                <li key={i}>
-                  <div>{pokeType.type.name}</div>
-                </li>
-              ))}
-              <PokemonMinInfo>
-                <PokeID>#{pokemon.id}</PokeID>
-                <PokePhoto src={[uriImage, pikachu404]} alt={pokemon.name} />
-                <Sprites>
-                  <Tag>
-                    <p>Normal</p>
-                    <PokeSprite src={sprites.front_default} />
-                  </Tag>
-                  <Tag>
-                    <p>Shiny</p>
-                    <PokeSprite src={sprites.front_shiny} />
-                  </Tag>
-                </Sprites>
+              ))} */}
 
-                <Info>
-                  <div>
-                    <strong>Nome:</strong>
-                    <Name>
-                      <p>{pokemon.name}</p>
-                    </Name>
-                  </div>
-                  <div>
-                    <strong>Peso:</strong> <Name>{pokemon.weight}</Name>
-                  </div>
-                  <div>
-                    <strong>Altura:</strong> <Name>{pokemon.height}</Name>
-                  </div>
-                  <Link to={`/pokemon/${pokemon.name}`}>Mais Detalhes</Link>
-                </Info>
-              </PokemonMinInfo>
+              <PokeTitle>
+                <h1>{pokemon.name}</h1>
+                <h1>#{pokemon.id}</h1>
+              </PokeTitle>
+              <PokemonContainer>
+                <PokeInfo>
+                  <PokeImages>
+                    <PokePhoto
+                      src={[uriImage, pikachu404]}
+                      alt={pokemon.name}
+                    />
+                    <Sprites>
+                      <Tag>
+                        <p>Normal</p>
+                        <PokeSprite src={sprites.front_default} />
+                      </Tag>
+                      <Tag>
+                        <p>Shiny</p>
+                        <PokeSprite src={sprites.front_shiny} />
+                      </Tag>
+                    </Sprites>
+                  </PokeImages>
+                  <InfoContainer>
+                    <h3>Informações Básicas</h3>
+                    <Info>
+                      <Basic>
+                        <Types>
+                          {types.map((pokeType, i) => (
+                            <TypeColor
+                              typeColor={this.getColorType(pokeType.type.name)}
+                              key={i}
+                            >
+                              <div>{pokeType.type.name}</div>
+                            </TypeColor>
+                          ))}
+                        </Types>
+                        <p>
+                          <strong>Peso:</strong>{' '}
+                          <Name>{pokemon.weight} Kg</Name>
+                        </p>
+                        <p>
+                          <strong>Altura:</strong>{' '}
+                          <Name>{(pokemon.height * 10) / 100} m</Name>
+                        </p>
+                      </Basic>
+                      <Stats>
+                        {stats.reverse().map((pokeStats, i) => (
+                          <tr key={i}>
+                            <td>
+                              <strong>
+                                {this.transformTextStat(pokeStats.stat.name)}
+                              </strong>
+                            </td>
+                            <BarStats stat={pokeStats.base_stat}>
+                              <div>{pokeStats.base_stat}</div>
+                            </BarStats>
+                          </tr>
+                        ))}
+                      </Stats>
+                    </Info>
+                  </InfoContainer>
+                </PokeInfo>
+              </PokemonContainer>
             </>
           )}
         </Pokedex>

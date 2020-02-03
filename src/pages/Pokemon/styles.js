@@ -5,14 +5,47 @@ import ballSprite from '../../assets/pokeballSprite.png';
 
 export const Container = styled.div``;
 
-export const PokemonMinInfo = styled.div`
+export const PokemonContainer = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  border: 1px solid #bbb;
+  align-items: center;
+  width: 100%;
+  border: 2px solid #444;
   background: #eee;
   padding: 16px;
-  border-radius: 8px;
+  border-radius: 0 0 8px 8px;
   position: relative;
+`;
+
+export const PokeTitle = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background: #444;
+  padding: 4px 20px;
+  border-radius: 8px 8px 0 0;
+
+  h1 {
+    color: #fff;
+  }
+
+  h1::first-letter {
+    text-transform: uppercase;
+  }
+`;
+
+export const PokeInfo = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+`;
+
+export const PokeImages = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 export const PokePhoto = styled(ImageReact)`
@@ -31,7 +64,7 @@ export const Sprites = styled.div`
   flex-direction: column;
 `;
 
-export const PokeSprite = styled.img.attrs(props => ({ src: props.src }))`
+export const PokeSprite = styled(ImageReact)`
   width: 100px;
   height: 100px;
   background-image: url(${ballSprite});
@@ -41,48 +74,95 @@ export const PokeSprite = styled.img.attrs(props => ({ src: props.src }))`
   border: 0;
 `;
 
-export const Info = styled.div`
+export const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 450px;
+  width: 100%;
   margin-left: 24px;
+  border: 2px solid #444;
+  border-radius: 8px;
 
-  div {
-    display: flex;
-    align-items: center;
-    padding: 10px 12px;
-    background: #ddd;
-    border-radius: 4px;
-    margin-bottom: 4px;
-  }
-
-  a {
-    border: 0;
-    background: #8b0002;
-    padding: 5px 20px;
-    width: 450px;
-    height: 30px;
-    border-radius: 4px;
-    text-transform: uppercase;
-    text-align: center;
-    text-decoration: none;
-    font-weight: bold;
+  h3 {
+    background: #444;
+    padding: 4px 8px;
     color: #fff;
   }
 `;
 
-export const PokeID = styled.div`
-  position: absolute;
-  top: -10px;
-  left: -10px;
-  padding: 4px;
-  background: #bbb;
+export const Info = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const Stats = styled.table`
+  width: 50%;
+  margin: 10px;
+`;
+
+export const BarStats = styled.td`
+  background: #ccc;
+  width: 70%;
+  height: 24px;
   border-radius: 4px;
-  width: 70px;
-  text-align: center;
-  color: #fff;
+  div {
+    display: flex;
+    align-items: center;
+    background: green;
+    padding: 2px 10px;
+    width: ${props => (props.stat * 100) / 255}%;
+    height: 100%;
+    border-radius: 4px;
+  }
+`;
+
+export const Basic = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  p {
+    padding: 10px 12px;
+    background: #ddd;
+    border-radius: 4px;
+    margin: 8px;
+  }
+`;
+
+export const Types = styled.div`
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  li {
+    background: ${props => props.typeColor};
+    padding: 8px 32px;
+    border-radius: 8px;
+    font-weight: bold;
+    color: #fff;
+
+    & + li {
+      margin-left: 8px;
+    }
+
+    div::first-letter {
+      text-transform: uppercase;
+    }
+  }
+`;
+
+export const TypeColor = styled.li`
+  background: ${props => props.typeColor};
+  padding: 8px 32px;
+  border-radius: 8px;
   font-weight: bold;
+  color: #fff;
+
+  & + li {
+    margin-left: 8px;
+  }
+
+  div::first-letter {
+    text-transform: uppercase;
+  }
 `;
 
 export const Name = styled.label`
