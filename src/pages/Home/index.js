@@ -96,16 +96,16 @@ export default class Home extends Component {
         <Pokedex>
           <PokemonList>
             {pokemonsList.map(poke => (
-              <li key={String(poke.name)}>
-                <div>#{poke.url.slice(34, -1)}</div>
-                <PokePhoto
-                  src={[this.changeLink(image, poke.url), pikachu404]}
-                  alt={poke.name}
-                />
-                <p>
-                  <Link to={`/search/${poke.name}`}>{poke.name}</Link>
-                </p>
-              </li>
+              <Link to={`/search/${poke.name}`}>
+                <li key={String(poke.name)}>
+                  <div>#{poke.url.slice(34, -1)}</div>
+                  <PokePhoto
+                    src={[this.changeLink(image, poke.url), pikachu404]}
+                    alt={poke.name}
+                  />
+                  <p>{poke.name}</p>
+                </li>
+              </Link>
             ))}
           </PokemonList>
           <ButtonToolTip>
