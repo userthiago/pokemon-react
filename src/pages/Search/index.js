@@ -204,10 +204,11 @@ export default class Search extends Component {
                       </Name>
                     </div>
                     <div>
-                      <strong>Peso:</strong> <Name>{pokemon.weight}</Name>
+                      <strong>Peso:</strong> <Name>{pokemon.weight} Kg</Name>
                     </div>
                     <div>
-                      <strong>Altura:</strong> <Name>{pokemon.height}</Name>
+                      <strong>Altura:</strong>{' '}
+                      <Name>{(pokemon.height * 10) / 100} m</Name>
                     </div>
                     <Link to={`/pokemon/${pokemon.name}`}>Mais Detalhes</Link>
                   </Info>
