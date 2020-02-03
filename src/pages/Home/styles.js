@@ -48,15 +48,11 @@ export const PokemonList = styled.ul`
     &::first-letter {
       text-transform: uppercase;
     }
+  }
 
-    a {
-      text-decoration: none;
-      color: #fff;
-
-      &:hover {
-        color: #cc1416;
-      }
-    }
+  a {
+    text-decoration: none;
+    color: #fff;
   }
 `;
 
