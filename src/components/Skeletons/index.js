@@ -37,7 +37,7 @@ export const InfoSkeleton = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 450px;
+  width: 100%;
   margin-left: 24px;
 
   div {
@@ -54,9 +54,21 @@ export const InfoSkeleton = styled.div`
     border: 0;
     background: #ddd;
     padding: 5px 20px;
-    width: 450px;
+    width: 100%;
     height: 30px;
     border-radius: 4px;
     color: #fff;
+  }
+
+  @media screen and (max-width: 650px) {
+    margin: 0;
+
+    p {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      height: 60px;
+    }
   }
 `;
