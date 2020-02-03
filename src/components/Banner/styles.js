@@ -12,6 +12,7 @@ const bannerMove = keyframes`
 
 export const BannerContainer = styled.div`
   display: flex;
+  text-align: center;
   align-items: center;
   justify-content: center;
   background-position: 0 0;
@@ -31,7 +32,6 @@ export const BannerContainer = styled.div`
   @media screen and (max-width: 500px) {
     height: 300px;
     flex-direction: column;
-    text-align: center;
   }
 `;
 

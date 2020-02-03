@@ -40,7 +40,7 @@ export const HeaderContainer = styled.header`
     }
   }
 
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: 750px) {
     justify-content: center;
   }
 `;

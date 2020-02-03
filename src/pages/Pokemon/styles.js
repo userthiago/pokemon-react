@@ -307,7 +307,7 @@ export const EvolutionContent = styled.ul`
     align-items: center;
   }
 
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: 600px) {
     flex-direction: column;
     margin: 16px 0;
 

@@ -11,8 +11,9 @@ import PokemonMiss from '../../assets/pokemon_miss.svg';
 
 import MenuBar from '../../components/MenuBar';
 import Banner from '../../components/Banner';
-import Pokedex from '../../components/Pokedex';
 import WelcomeSearch from '../../components/WelcomeSearch';
+import Pokedex from '../../components/Pokedex';
+import Footer from '../../components/Footer';
 
 import pikachu404 from '../../assets/404.png';
 
@@ -198,6 +199,7 @@ export default class Search extends Component {
             </PokemonMinInfo>
           )}
         </Pokedex>
+        <Footer />
       </Container>
     );
   }

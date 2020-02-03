@@ -9,6 +9,7 @@ import Api from '../../services/api';
 import MenuBar from '../../components/MenuBar';
 import Banner from '../../components/Banner';
 import Pokedex from '../../components/Pokedex';
+import Footer from '../../components/Footer';
 
 import pikachu404 from '../../assets/404.png';
 import PokemonInformation from '../../assets/pokemon_information.svg';
@@ -443,6 +444,7 @@ export default class Pokemon extends Component {
             </MovesContainer>
           </PokemonContainer>
         </Pokedex>
+        <Footer />
       </Container>
     );
   }
