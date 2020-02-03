@@ -7,7 +7,7 @@ import { MdSearch, MdReplay } from 'react-icons/md';
 import Api from '../../services/api';
 
 import PikachuFound from '../../assets/pokemon_found.svg';
-import PikachuMiss from '../../assets/pokemon_miss.svg';
+import PokemonMiss from '../../assets/pokemon_miss.svg';
 
 import MenuBar from '../../components/MenuBar';
 import Banner from '../../components/Banner';
@@ -67,56 +67,6 @@ export default class Search extends Component {
     this.setState({ newPokemon: e.target.value });
   };
 
-  // handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   const { newPokemon } = this.state;
-  //   if (!newPokemon) return null;
-
-  //   this.setState({ loading: true });
-  //   const response = await Api.get(`/${newPokemon.toLowerCase()}`).catch(
-  //     error => {
-  //       if (error.response.status === 404) {
-  //         this.setState({ emptySearch: true });
-  //       }
-  //     }
-  //   );
-
-  //   const { emptySearch } = this.state;
-  //   if (emptySearch) {
-  //     toast.error(() => (
-  //       <ToastMessage>
-  //         <img src={PikachuMiss} alt="" />
-  //         Nenhum pokémon encontrado.
-  //       </ToastMessage>
-  //     ));
-  //     return this.setState({
-  //       newPokemon: '',
-  //       loading: false,
-  //       emptySearch: false,
-  //     });
-  //   }
-  //   const pokemonData = response.data;
-  //   const pokemonSprites = response.data.sprites;
-
-  //   toast.success(() => (
-  //     <ToastMessage>
-  //       <img src={PikachuFound} alt="" />{' '}
-  //       <strong>
-  //         {pokemonData.name[0].toUpperCase() + pokemonData.name.slice(1)}
-  //       </strong>
-  //       <p>encontrado.</p>
-  //     </ToastMessage>
-  //   ));
-
-  //   return this.setState({
-  //     newPokemon: '',
-  //     pokemon: pokemonData,
-  //     sprites: pokemonSprites,
-  //     loading: false,
-  //   });
-  // };
-
   handleSearch = e => {
     e.preventDefault();
     const { newPokemon } = this.state;
@@ -142,7 +92,7 @@ export default class Search extends Component {
     if (emptySearch) {
       toast.error(() => (
         <ToastMessage>
-          <img src={PikachuMiss} alt="" />
+          <img src={PokemonMiss} alt="" />
           Nenhum pokémon encontrado.
         </ToastMessage>
       ));
@@ -241,7 +191,9 @@ export default class Search extends Component {
                     <div>
                       <strong>Altura:</strong> <Name>{pokemon.height}</Name>
                     </div>
-                    <Link to={`/pokemon/${pokemon.name}`}>Mais Detalhes</Link>
+                    <Link to={`/pokemon/${pokemon.name}`} disable>
+                      Mais Detalhes
+                    </Link>
                   </Info>
                 </>
               )}

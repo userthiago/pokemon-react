@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { MdKeyboardArrowRight } from 'react-icons/md';
 import PropTypes from 'prop-types';
 
 import Api from '../../services/api';
@@ -9,6 +11,7 @@ import Banner from '../../components/Banner';
 import Pokedex from '../../components/Pokedex';
 
 import pikachu404 from '../../assets/404.png';
+import PokemonInformation from '../../assets/pokemon_information.svg';
 
 import {
   Container,
@@ -16,6 +19,7 @@ import {
   PokeTitle,
   PokeInfo,
   PokeImages,
+  Sprites,
   Stats,
   BarStats,
   Basic,
@@ -23,11 +27,13 @@ import {
   TypeColor,
   PokePhoto,
   PokeSprite,
-  Name,
-  Sprites,
+  EvolutionContainer,
+  EvolutionContent,
+  Evolution,
   InfoContainer,
   Info,
   Tag,
+  ToastMessage,
 } from './styles';
 
 export default class Pokemon extends Component {
@@ -68,6 +74,21 @@ export default class Pokemon extends Component {
       }
     );
 
+    const { emptySearch } = this.state;
+    if (emptySearch || response.data.id > 807) {
+      toast.warning(() => (
+        <ToastMessage>
+          <img src={PokemonInformation} alt="" />
+          Não há informação sobre {response.data.name}.
+        </ToastMessage>
+      ));
+      return this.setState({
+        loading: false,
+        emptySearch: false,
+        redirect: true,
+      });
+    }
+
     const pokemonSpecies = await Api.get(
       `/pokemon-species/${response.data.id}`
     ).catch(error => {
@@ -101,25 +122,12 @@ export default class Pokemon extends Component {
         min_level: !evoDetails ? 1 : evoDetails.min_level,
         trigger_name: !evoDetails ? null : evoDetails.trigger.name,
         item: !evoDetails ? null : evoDetails.item,
-        url: !evoDetails ? null : evoData.species.url,
+        url: evoData.species.url,
       });
-      console.log(evoData.species.url.slice(42, -1));
-
       [evoData] = [evoData.evolves_to[0]];
       // eslint-disable-next-line no-prototype-builtins
     } while (!!evoData && evoData.hasOwnProperty('evolves_to'));
 
-    console.log(evoChain);
-
-    const { emptySearch } = this.state;
-
-    if (emptySearch) {
-      return this.setState({
-        loading: false,
-        emptySearch: false,
-        redirect: true,
-      });
-    }
     return this.setState({
       pokemon: response.data,
       sprites: response.data.sprites,
@@ -229,18 +237,6 @@ export default class Pokemon extends Component {
             <div>Carregando...</div>
           ) : (
             <>
-              {/* <h1>Evolution</h1>
-              {evolutionChain.map((evolution, i) => (
-                <li key={i}>
-                  <div>{evolution.species_name}</div>
-                  <div>{evolution.min_level}</div>
-                  <div>{evolution.item}</div>
-                  <img
-                    src={this.makeLink(pokemon.id, image, evolution.url)}
-                    alt={evolution.species_name}
-                  />
-                </li>
-              ))} */}
               {/* <h1>abilities</h1>
               {abilities.map((pokeAbility, i) => (
                 <li key={i}>
@@ -291,31 +287,61 @@ export default class Pokemon extends Component {
                           ))}
                         </Types>
                         <p>
-                          <strong>Peso:</strong>{' '}
-                          <Name>{pokemon.weight} Kg</Name>
+                          <strong>Peso:</strong> {pokemon.weight} Kg
                         </p>
                         <p>
-                          <strong>Altura:</strong>{' '}
-                          <Name>{(pokemon.height * 10) / 100} m</Name>
+                          <strong>Altura:</strong> {(pokemon.height * 10) / 100}{' '}
+                          m
                         </p>
                       </Basic>
                       <Stats>
-                        {stats.reverse().map((pokeStats, i) => (
-                          <tr key={i}>
-                            <td>
-                              <strong>
-                                {this.transformTextStat(pokeStats.stat.name)}
-                              </strong>
-                            </td>
-                            <BarStats stat={pokeStats.base_stat}>
-                              <div>{pokeStats.base_stat}</div>
-                            </BarStats>
-                          </tr>
-                        ))}
+                        <tbody>
+                          {stats.reverse().map((pokeStats, i) => (
+                            <tr key={i}>
+                              <td>
+                                <strong>
+                                  {this.transformTextStat(pokeStats.stat.name)}
+                                </strong>
+                              </td>
+                              <BarStats stat={pokeStats.base_stat}>
+                                <div>{pokeStats.base_stat}</div>
+                              </BarStats>
+                            </tr>
+                          ))}
+                        </tbody>
                       </Stats>
                     </Info>
                   </InfoContainer>
                 </PokeInfo>
+
+                <EvolutionContainer>
+                  <h3>Evoluções</h3>
+                  <EvolutionContent>
+                    {evolutionChain.map((evolution, i, arr) => (
+                      <li key={i}>
+                        <Evolution>
+                          <img
+                            src={this.makeLink(
+                              pokemon.id,
+                              image,
+                              evolution.url
+                            )}
+                            alt={evolution.species_name}
+                          />
+                          <div>
+                            <p>{evolution.species_name}</p>
+                          </div>
+                          <div>Level {evolution.min_level}</div>
+                        </Evolution>
+                        {arr.length - 1 !== i ? (
+                          <MdKeyboardArrowRight />
+                        ) : (
+                          <></>
+                        )}
+                      </li>
+                    ))}
+                  </EvolutionContent>
+                </EvolutionContainer>
               </PokemonContainer>
             </>
           )}

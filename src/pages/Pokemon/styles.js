@@ -74,6 +74,23 @@ export const PokeSprite = styled(ImageReact)`
   border: 0;
 `;
 
+export const Tag = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  p {
+    position: absolute;
+    bottom: 0;
+    font-size: 12px;
+    background-color: #8b0002;
+    color: #fff;
+    border-radius: 12px;
+    padding: 2px 8px;
+  }
+`;
+
 export const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -98,10 +115,13 @@ export const Info = styled.div`
 export const Stats = styled.table`
   width: 50%;
   margin: 10px;
+  background: #ddd;
+  padding: 8px;
+  border-radius: 4px;
 `;
 
 export const BarStats = styled.td`
-  background: #ccc;
+  background: #bbb;
   width: 70%;
   height: 24px;
   border-radius: 4px;
@@ -165,27 +185,86 @@ export const TypeColor = styled.li`
   }
 `;
 
-export const Name = styled.label`
-  margin-bottom: 0px !important;
-  margin-left: 4px;
-  p::first-letter {
-    text-transform: uppercase;
+export const EvolutionContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  border: 2px solid #444;
+  border-radius: 8px;
+  margin-top: 16px;
+
+  h3 {
+    background: #444;
+    padding: 4px 8px;
+    color: #fff;
   }
 `;
 
-export const Tag = styled.div`
-  position: relative;
+export const EvolutionContent = styled.ul`
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 16px;
+
+  svg {
+    width: 100px;
+    height: 100px;
+    color: #aaa;
+  }
+
+  li {
+    display: flex;
+    align-items: center;
+  }
+`;
+
+export const Evolution = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+  width: 100%;
 
+  img {
+    width: 140px;
+    background-image: url(${ballSprite});
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 120px;
+  }
+
+  div {
+    p {
+      font-weight: bold;
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    p::first-letter {
+      text-transform: uppercase;
+    }
+
+    & + div {
+      background: #444;
+      padding: 4px 12px;
+      border-radius: 16px;
+      font-weight: bold;
+      color: #fff;
+    }
+  }
+`;
+export const ToastMessage = styled.div`
+  display: flex;
+  align-items: center;
   p {
-    position: absolute;
-    bottom: 0;
-    font-size: 12px;
-    background-color: #8b0002;
-    color: #fff;
-    border-radius: 12px;
-    padding: 2px 8px;
+    margin-left: 5px;
+  }
+
+  img {
+    width: 40px;
+    margin: 0 15px 0 10px;
   }
 `;
