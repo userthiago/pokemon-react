@@ -159,6 +159,7 @@ export const Basic = styled.div`
   display: flex;
   flex-direction: column;
   width: 50%;
+  margin-top: 8px;
 
   h3 {
     border-radius: 4px;
@@ -263,6 +264,7 @@ export const EvolutionContainer = styled.div`
 export const EvolutionContent = styled.ul`
   list-style: none;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -296,6 +298,7 @@ export const Evolution = styled.div`
   }
 
   div {
+    text-align: center;
     p {
       font-weight: bold;
       font-size: 20px;
@@ -308,6 +311,7 @@ export const Evolution = styled.div`
 
     & + div {
       background: #444;
+      max-width: 200px;
       padding: 4px 12px;
       border-radius: 16px;
       font-weight: bold;

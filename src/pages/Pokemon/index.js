@@ -120,21 +120,54 @@ export default class Pokemon extends Component {
     const evoChain = [];
     let evoData = evolution.data.chain;
 
-    do {
-      const evoDetails = evoData.evolution_details[0];
-
+    if (evoData.evolves_to.length <= 1) {
+      do {
+        const evoDetails = evoData.evolution_details[0];
+        evoChain.push({
+          species_name: evoData.species.name,
+          min_level: !evoDetails ? 1 : evoDetails.min_level,
+          trigger_name: !evoDetails ? null : evoDetails.trigger.name,
+          item: !evoDetails ? null : evoDetails.item,
+          is_baby: evoData.is_baby,
+          min_happiness: !evoDetails ? null : evoDetails.min_happiness,
+          held_item: !evoDetails ? null : evoDetails.held_item,
+          location: !evoDetails ? null : evoDetails.location,
+          known_move_type: !evoDetails ? null : evoDetails.known_move_type,
+          url: evoData.species.url,
+        });
+        [evoData] = [evoData.evolves_to[0]];
+        // eslint-disable-next-line no-prototype-builtins
+      } while (!!evoData && evoData.hasOwnProperty('evolves_to'));
+    } else {
+      let evoDetails = evoData.evolution_details[0];
       evoChain.push({
         species_name: evoData.species.name,
         min_level: !evoDetails ? 1 : evoDetails.min_level,
         trigger_name: !evoDetails ? null : evoDetails.trigger.name,
         item: !evoDetails ? null : evoDetails.item,
+        is_baby: evoData.is_baby,
+        min_happiness: !evoDetails ? null : evoDetails.min_happiness,
+        held_item: !evoDetails ? null : evoDetails.held_item,
+        location: !evoDetails ? null : evoDetails.location,
+        known_move_type: !evoDetails ? null : evoDetails.known_move_type,
         url: evoData.species.url,
       });
-      [evoData] = [evoData.evolves_to[0]];
-      // eslint-disable-next-line no-prototype-builtins
-    } while (!!evoData && evoData.hasOwnProperty('evolves_to'));
-
-    console.log(response.data);
+      evoData.evolves_to.map(evo => {
+        [evoDetails] = [evo.evolution_details[0]];
+        return evoChain.push({
+          species_name: evo.species.name,
+          min_level: !evoDetails ? 1 : evoDetails.min_level,
+          trigger_name: !evoDetails ? null : evoDetails.trigger.name,
+          item: !evoDetails ? null : evoDetails.item,
+          is_baby: evo.is_baby,
+          min_happiness: !evoDetails ? null : evoDetails.min_happiness,
+          held_item: !evoDetails ? null : evoDetails.held_item,
+          location: !evoDetails ? null : evoDetails.location,
+          known_move_type: !evoDetails ? null : evoDetails.known_move_type,
+          url: evo.species.url,
+        });
+      });
+    }
 
     return this.setState({
       pokemon: response.data,
@@ -215,6 +248,31 @@ export default class Pokemon extends Component {
       default:
         return '#bebebe';
     }
+  };
+
+  checkTagEvolution = evo => {
+    if (!evo.is_baby) {
+      if (evo.min_level === 1) {
+        return 'Inicial';
+      }
+      if (evo.min_happiness) {
+        return `Felicidade ${evo.min_happiness}`;
+      }
+      if (evo.item && evo.item.name) {
+        return `Evolui com ${evo.item.name}`;
+      }
+      if (evo.held_item && evo.held_item.name) {
+        return `Evolui segurando ${evo.held_item.name}`;
+      }
+      if (evo.known_move_type && evo.known_move_type.name) {
+        return `Evolui se aprender um ataque do tipo ${evo.known_move_type.name}`;
+      }
+      if (evo.location && evo.location.name) {
+        return `Evolui se passar de nível no mapa ${evo.location.name}`;
+      }
+      return `Level ${evo.min_level}`;
+    }
+    return 'Bebê';
   };
 
   render() {
@@ -334,7 +392,7 @@ export default class Pokemon extends Component {
                       <div>
                         <p>{evolution.species_name}</p>
                       </div>
-                      <div>Level {evolution.min_level}</div>
+                      <div>{this.checkTagEvolution(evolution)}</div>
                     </Evolution>
                     {arr.length - 1 !== i ? <MdKeyboardArrowRight /> : <></>}
                   </li>
