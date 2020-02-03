@@ -377,6 +377,7 @@ export const MovesContainer = styled.div`
 
 export const MovesContent = styled.table`
   border-collapse: collapse;
+  width: 100%;
   tr:nth-child(even) {
     background-color: #ddd;
   }
