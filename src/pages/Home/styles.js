@@ -11,6 +11,9 @@ export const PokemonList = styled.ul`
   list-style: none;
 
   li {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     height: 212px;
     width: 154px;
     border: 2px solid #444;
@@ -38,7 +41,6 @@ export const PokemonList = styled.ul`
   }
 
   p {
-    bottom: 0;
     text-align: center;
     font-weight: bold;
     color: #fff;
