@@ -265,6 +265,7 @@ export const BarStats = styled.td`
     align-items: center;
     background: green;
     padding: 2px 10px;
+    color: #fff;
     width: ${props => (props.stat * 100) / 255}%;
     height: 100%;
     border-radius: 4px;
@@ -367,6 +368,7 @@ export const MovesContainer = styled.div`
   border: 2px solid #444;
   border-radius: 8px 8px 0 0;
   margin-top: 16px;
+  background: #555;
 
   h3 {
     color: #fff;
@@ -380,6 +382,10 @@ export const MovesContent = styled.table`
   width: 100%;
   tr:nth-child(even) {
     background-color: #ddd;
+  }
+
+  tr:nth-child(odd) {
+    background-color: #fff;
   }
 
   th {
