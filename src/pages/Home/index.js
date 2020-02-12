@@ -96,8 +96,8 @@ export default class Home extends Component {
         <Pokedex>
           <PokemonList>
             {pokemonsList.map(poke => (
-              <Link to={`/search/${poke.name}`}>
-                <li key={String(poke.name)}>
+              <Link key={String(poke.name)} to={`/search/${poke.name}`}>
+                <li>
                   <div>#{poke.url.slice(34, -1)}</div>
                   <PokePhoto
                     src={[this.changeLink(image, poke.url), pikachu404]}

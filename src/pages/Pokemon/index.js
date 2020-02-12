@@ -380,7 +380,10 @@ export default class Pokemon extends Component {
                           <AbilitiesContent>
                             {abilities.map((pokeAbility, i) => (
                               <li key={i}>
-                                <div>{pokeAbility.ability.name}</div>
+                                <div>
+                                  {pokeAbility.ability.name}
+                                  {pokeAbility.is_hidden ? ' (Secreta)' : ''}
+                                </div>
                               </li>
                             ))}
                           </AbilitiesContent>
