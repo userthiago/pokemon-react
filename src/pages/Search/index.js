@@ -204,7 +204,8 @@ export default class Search extends Component {
                       </Name>
                     </div>
                     <div>
-                      <strong>Peso:</strong> <Name>{pokemon.weight} Kg</Name>
+                      <strong>Peso:</strong>{' '}
+                      <Name>{pokemon.weight / 10} Kg</Name>
                     </div>
                     <div>
                       <strong>Altura:</strong>{' '}

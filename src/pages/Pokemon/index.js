@@ -369,7 +369,7 @@ export default class Pokemon extends Component {
                       <Basic>
                         <h3>Perfil</h3>
                         <p>
-                          <strong>Peso:</strong> {pokemon.weight} Kg
+                          <strong>Peso:</strong> {pokemon.weight / 10} Kg
                         </p>
                         <p>
                           <strong>Altura:</strong> {(pokemon.height * 10) / 100}{' '}
