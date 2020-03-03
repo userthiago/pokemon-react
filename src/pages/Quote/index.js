@@ -105,7 +105,13 @@ export default class Quote extends Component {
             <>
               <CurrencyTitle>
                 <CurrencyImage src={[uriImageCurrency1, pikachu404]} />
-                <h1>PokéCotação</h1>
+                <h1>
+                  PokéCotação
+                  <div>
+                    Valor da cotação de {cotacao.code} para {cotacao.codein}{' '}
+                    hoje
+                  </div>
+                </h1>
                 <CurrencyImage src={[uriImageCurrency2, pikachu404]} />
               </CurrencyTitle>
               <CurrencyContent>
@@ -120,8 +126,9 @@ export default class Quote extends Component {
                 <CurrencyText>{cotacao.codein}</CurrencyText>
               </CurrencyContent>
               <Message>
-                O pokémon escolhido conforme a cotação do dia{' '}
-                <strong>{today.toLocaleDateString()}</strong> é:
+                O pokémon escolhido é o número <strong>#{pokemon.id}</strong>{' '}
+                conforme a cotação de hoje ({today.toLocaleDateString()}) a{' '}
+                <strong>R$ {parseFloat(cotacao.high).toFixed(2)}</strong>:
               </Message>
               <PokemonMinInfo>
                 <PokeID>#{pokemon.id}</PokeID>

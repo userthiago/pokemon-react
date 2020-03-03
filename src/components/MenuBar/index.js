@@ -1,13 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MdSearch, MdMonetizationOn } from 'react-icons/md';
+import { MdHome, MdSearch, MdMonetizationOn } from 'react-icons/md';
 import { HeaderContainer } from './styles';
 
 const MenuBar = () => {
   return (
     <HeaderContainer>
       <div>
-        <Link to="/">Home</Link>
+        <Link to="/">
+          <MdHome /> <p>Home</p>
+        </Link>
         <Link to="/search">
           <MdSearch /> <p>Buscar</p>
         </Link>

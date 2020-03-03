@@ -24,10 +24,26 @@ export const CurrencyTitle = styled.div`
   text-shadow: 2px 2px 0px #000000;
   h1 {
     z-index: 5;
-    font-size: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     color: #fff;
+    font-size: 32px;
     padding: 4px 16px;
     border-radius: 8px;
+
+    div {
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid #000000;
+      color: #fff;
+      font-size: 12px;
+      padding: 2px 16px;
+      text-shadow: none;
+      border-radius: 8px;
+      margin-top: 4px;
+    }
   }
 
   @media screen and (max-width: 1300px) {
