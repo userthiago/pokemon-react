@@ -54,6 +54,7 @@ export const CurrencyImage = styled(ImageReact)`
 `;
 
 export const CurrencyContent = styled.div`
+  z-index: 5;
   position: relative;
   display: flex;
   flex-direction: row;
