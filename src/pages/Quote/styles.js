@@ -23,6 +23,7 @@ export const CurrencyTitle = styled.div`
   border-radius: 16px;
   text-shadow: 2px 2px 0px #000000;
   h1 {
+    z-index: 5;
     font-size: 32px;
     color: #fff;
     padding: 4px 16px;
@@ -54,7 +55,6 @@ export const CurrencyImage = styled(ImageReact)`
 `;
 
 export const CurrencyContent = styled.div`
-  z-index: 5;
   position: relative;
   display: flex;
   flex-direction: row;
