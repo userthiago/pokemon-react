@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import PropTypes from 'prop-types';
 
-import Api from '../../services/api';
+import Api from '../../services/apiPokemon';
 
 import MenuBar from '../../components/MenuBar';
 import Banner from '../../components/Banner';

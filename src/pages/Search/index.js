@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import { MdSearch, MdReplay } from 'react-icons/md';
 
-import Api from '../../services/api';
+import Api from '../../services/apiPokemon';
 
 import PikachuFound from '../../assets/pokemon_found.svg';
 import PokemonMiss from '../../assets/pokemon_miss.svg';

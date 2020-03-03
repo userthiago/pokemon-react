@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { MdAdd } from 'react-icons/md';
 import { toast } from 'react-toastify';
-import Api from '../../services/api';
+
+import Api from '../../services/apiPokemon';
 
 import MenuBar from '../../components/MenuBar';
 import Banner from '../../components/Banner';
