@@ -52,7 +52,7 @@ export default class Quote extends Component {
   }
 
   handleSubmit = async () => {
-    const responseCotacao = await ApiCotacao.get('/USD-BR').catch(error => {
+    const responseCotacao = await ApiCotacao.get('/USD').catch(error => {
       if (!error.response) {
         return this.setState({
           serverDown: true,
@@ -73,8 +73,6 @@ export default class Quote extends Component {
       }
       return null;
     });
-
-    console.log(responsePokemon);
 
     return this.setState({
       pokemon: responsePokemon.data,
