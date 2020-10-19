@@ -51,7 +51,7 @@ export default class Search extends Component {
       pokemon: {},
       sprites: [],
       image:
-        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other-sprites/official-artwork/',
+        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/',
     };
   }
 

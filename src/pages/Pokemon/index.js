@@ -60,7 +60,7 @@ export default class Pokemon extends Component {
       types: [],
       evolutionChain: [],
       image:
-        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other-sprites/official-artwork/',
+        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/',
     };
   }
 

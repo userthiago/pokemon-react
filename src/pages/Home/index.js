@@ -31,7 +31,7 @@ export default class Home extends Component {
       serverDown: false,
       pokemonsList: [],
       image:
-        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other-sprites/official-artwork/',
+        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/',
     };
   }
 
