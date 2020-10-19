@@ -88,7 +88,7 @@ export default class Quote extends Component {
 
   render() {
     const { cotacao, image, pokemon, sprites, loading } = this.state;
-    const uriImage = `${image}other-sprites/official-artwork/${pokemon.id}.png`;
+    const uriImage = `${image}other/official-artwork/${pokemon.id}.png`;
     const uriImageCurrency1 = `${image}${Math.floor(Math.random() * 803)}.png`;
     const uriImageCurrency2 = `${image}${Math.floor(Math.random() * 803)}.png`;
     const today = new Date();
